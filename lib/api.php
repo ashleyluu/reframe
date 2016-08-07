@@ -46,6 +46,34 @@ class ReframeApi {
     }
   }
 
+  function getUserInfoByFacebookId($facebook_id) {
+    $sql = "SELECT user_id, facebook_id, first_name, last_name, image_url, email, user_type, stem_tags, bio FROM person WHERE facebook_id = :facebook_id";
+
+    //Prepare our statement.
+    $statement = $this->pdo->prepare($sql);
+
+    //bind
+    $statement->bindValue(':facebook_id', $facebook_id);
+    //var_dump($statement);
+
+    //Execute the statement and insert our values.
+    $inserted = $statement->execute();
+
+    if($inserted) {
+      while ($row = $statement->fetch())
+      {
+          echo $row['first_name']." ".$row['last_name']. "\n";
+      }
+    } else {
+      echo "User could not be found.";
+    }
+
+    // while ($row = $statement->fetch())
+    // {
+    //     echo $row['first_name']." ".$row['last_name']. "\n";
+    // }
+  }
+
 }
 
 //CREATE INSTANCE OF REFRAME API CLASS
@@ -55,6 +83,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   if($_POST['action'] == "addNewUser") {
     $reframe_api->addNewPerson($_POST['facebook_id'], $_POST['first_name'], $_POST['last_name'], $_POST['image_url'], $_POST['email'], $_POST['user_type'], $_POST['stem_tags'], $_POST['bio']);
   }
+} elseif($_SERVER["REQUEST_METHOD"] == "GET") {
+
+}
+
+if($_GET['action'] == "getUserInfoByFacebookId") {
+  $reframe_api->getUserInfoByFacebookId($_GET['facebook_id']);
 }
 
 
@@ -68,6 +102,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 // while ($row = $stmt->fetch())
 // {
 //     echo $row['name'] . "\n";
+// }
+
+// $stmt = $pdo->query('SELECT user_id, facebook_id, first_name, last_name, image_url, email, user_type, stem_tags, bio FROM person WHERE facebook_id = "5555"');
+// while ($row = $stmt->fetch())
+// {
+//     echo $row['first_name']." ".$row['last_name']. "\n";
 // }
 
 // function testFunction($pdo) {
