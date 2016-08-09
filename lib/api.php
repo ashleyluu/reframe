@@ -47,7 +47,11 @@ class ReframeApi {
   }
 
   function getUserInfoByFacebookId($facebook_id) {
-    $sql = "SELECT user_id, facebook_id, first_name, last_name, image_url, email, user_type, stem_tags, bio FROM person WHERE facebook_id = :facebook_id";
+    $json = array(); //INIT JSON ARRAY
+
+    $sql = "SELECT user_id, facebook_id, first_name, last_name, image_url, email, user_type, stem_tags, bio
+            FROM person
+            WHERE facebook_id = :facebook_id";
 
     //Prepare our statement.
     $statement = $this->pdo->prepare($sql);
@@ -58,20 +62,33 @@ class ReframeApi {
 
     //Execute the statement and insert our values.
     $inserted = $statement->execute();
+    $result_count = $statement->rowCount();
 
-    if($inserted) {
+    if($inserted && $result_count != 0) {
       while ($row = $statement->fetch())
       {
-          echo $row['first_name']." ".$row['last_name']. "\n";
+          $person = array(
+            'user_id' => $row['user_id'],
+            'facebook_id' => $row['facebook_id'],
+            'first_name' => $row['first_name'],
+            'last_name' => $row['last_name'],
+            'image_url' => $row['image_url'],
+            'email' => $row['email'],
+            'user_type' => $row['user_type'],
+            'stem_tags' => $row['stem_tags'],
+            'bio' => $row['bio']
+          );
+          array_push($json, $person);
       }
+      $jsonstring = json_encode($json);
     } else {
-      echo "User could not be found.";
+      $status = array(
+        'status' => "User could not be found."
+      );
+      array_push($json, $status);
+      $jsonstring = json_encode($json);
     }
-
-    // while ($row = $statement->fetch())
-    // {
-    //     echo $row['first_name']." ".$row['last_name']. "\n";
-    // }
+    echo $jsonstring; //RETURN JSON
   }
 
 }
@@ -80,11 +97,13 @@ class ReframeApi {
 $reframe_api = new ReframeApi($pdo);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  if($_POST['action'] == "addNewUser") {
-    $reframe_api->addNewPerson($_POST['facebook_id'], $_POST['first_name'], $_POST['last_name'], $_POST['image_url'], $_POST['email'], $_POST['user_type'], $_POST['stem_tags'], $_POST['bio']);
-  }
+
 } elseif($_SERVER["REQUEST_METHOD"] == "GET") {
 
+}
+
+if($_POST['action'] == "addNewUser") {
+  $reframe_api->addNewPerson($_POST['facebook_id'], $_POST['first_name'], $_POST['last_name'], $_POST['image_url'], $_POST['email'], $_POST['user_type'], $_POST['stem_tags'], $_POST['bio']);
 }
 
 if($_GET['action'] == "getUserInfoByFacebookId") {
