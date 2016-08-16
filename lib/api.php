@@ -22,12 +22,14 @@ class ReframeApi {
    * @param [type] $bio         [description]
    */
   function addNewPerson($facebook_id, $first_name, $last_name, $image_url, $email, $user_type, $stem_tags, $bio) {
-    $sql = "INSERT INTO Person (user_id, facebook_id, first_name, last_name, image_url, email, user_type, stem_tags, bio)
+    $sql = "INSERT INTO person (user_id, facebook_id, first_name, last_name, image_url, email, user_type, stem_tags, bio)
     VALUES (null, :facebook_id, :first_name, :last_name, :image_url, :email, :user_type, :stem_tags, :bio)";
+    //
+    //'4321', 'Brock', 'Lessner', 'imageurl', 'blessner@wwe.com', 'mentor', 'mathematics', 'MyBio'
 
     //Prepare our statement.
     $statement = $this->pdo->prepare($sql);
-
+echo var_dump($statement);
     //bind
     $statement->bindValue(':facebook_id', $facebook_id);
     $statement->bindValue(':first_name', $first_name);
@@ -96,14 +98,15 @@ class ReframeApi {
 //CREATE INSTANCE OF REFRAME API CLASS
 $reframe_api = new ReframeApi($pdo);
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+// if ($_SERVER["REQUEST_METHOD"] == "POST") {
+//
+// } elseif($_SERVER["REQUEST_METHOD"] == "GET") {
+//
+// }
 
-} elseif($_SERVER["REQUEST_METHOD"] == "GET") {
-
-}
-
-if($_POST['action'] == "addNewUser") {
-  $reframe_api->addNewPerson($_POST['facebook_id'], $_POST['first_name'], $_POST['last_name'], $_POST['image_url'], $_POST['email'], $_POST['user_type'], $_POST['stem_tags'], $_POST['bio']);
+if($_GET['action'] == "addNewUser") {
+  $reframe_api->addNewPerson($_GET['facebook_id'], $_GET['first_name'], $_GET['last_name'], $_GET['image_url'], $_GET['email'], $_GET['user_type'], $_GET['stem_tags'], $_GET['bio']);
+  // $reframe_api->addNewPerson('4321', 'Brock', 'Lessner', 'wwf.com/images', 'blessner@wwe.com', 'mentor', 'mathematics', 'This is my bio. This is a test.');
 }
 
 if($_GET['action'] == "getUserInfoByFacebookId") {
