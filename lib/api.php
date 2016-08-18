@@ -110,9 +110,26 @@ class ReframeApi {
   function getUserInfoByFacebookId($facebook_id) {
     $json = array(); //INIT JSON ARRAY
 
-    $sql = "SELECT user_id, facebook_id, first_name, last_name, image_url, email, user_type, stem_tags, bio
-            FROM person
-            WHERE facebook_id = :facebook_id";
+    $sql = "SELECT x.user_id,
+            x.facebook_id,
+            x.first_name,
+            x.last_name,
+            x.image_url,
+            x.email,
+            x.user_type,
+            x.stem_tags,
+            x.bio,
+            y.school,
+            y.grad_year,
+            y.major,
+            y.skills,
+            z.grade,
+            z.interest
+            FROM person x
+            LEFT OUTER JOIN mentor y ON  x.user_id = y.user_id AND x.user_type = 'mentor'
+            LEFT OUTER JOIN mentee z ON  x.user_id = z.user_id AND x.user_type = 'mentee'
+            WHERE x.facebook_id = :facebook_id
+            LIMIT 1";
 
     //Prepare our statement.
     $statement = $this->pdo->prepare($sql);
@@ -138,7 +155,13 @@ class ReframeApi {
             'email' => $row['email'],
             'user_type' => $row['user_type'],
             'stem_tags' => $row['stem_tags'],
-            'bio' => $row['bio']
+            'bio' => $row['bio'],
+            'school' => $row['school'],
+            'grad_year' => $row['grad_year'],
+            'major' => $row['major'],
+            'skills' => $row['skills'],
+            'grade' => $row['grade'],
+            'interest' => $row['interest']
           );
           array_push($json, $person);
       }
