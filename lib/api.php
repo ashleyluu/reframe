@@ -48,6 +48,11 @@ class ReframeApi {
     }
   }
 
+  /**
+   * [getUserInfoByFacebookId Retrieve a Reframe user by FB-ID. If user found, return status=1 else status=0]
+   * @param  [type] $facebook_id [returned by Facebook Login]
+   * @return [JSON]              [A JSON object with user data or status of 0]
+   */
   function getUserInfoByFacebookId($facebook_id) {
     $json = array(); //INIT JSON ARRAY
 
@@ -70,6 +75,7 @@ class ReframeApi {
       while ($row = $statement->fetch())
       {
           $person = array(
+            'status' => '1',
             'user_id' => $row['user_id'],
             'facebook_id' => $row['facebook_id'],
             'first_name' => $row['first_name'],
@@ -85,7 +91,7 @@ class ReframeApi {
       $jsonstring = json_encode($json);
     } else {
       $status = array(
-        'status' => "User could not be found."
+        'status' => "0" //user cannot be found
       );
       array_push($json, $status);
       $jsonstring = json_encode($json);
