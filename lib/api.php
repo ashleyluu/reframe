@@ -18,7 +18,6 @@ class ReframeApi {
 
   function setReframeUserId($new_user_id) {
     $this->reframe_user_id = $new_user_id;
-    return $this->reframe_user_id;
   }
   /**
    * [ADDS A NEW USER TO THE REFRAME PERSON TABLE AND RETURN NEW USER ID]
@@ -61,6 +60,8 @@ class ReframeApi {
   }
 
   function addNewMentor($school, $grad_year, $major, $skills) {
+    $user_id = $this->getReframeUserId(); //A USER'S ID
+
     $sql = "INSERT INTO mentor (mentor_id, user_id, school, grad_year, major, skills)
     VALUES (null, :user_id, :school, :grad_year, :major, :skills)";
 
@@ -68,7 +69,7 @@ class ReframeApi {
     $statement = $this->pdo->prepare($sql);
 
     //bind
-    $statement->bindValue(':user_id', $this->getReframeUserId());
+    $statement->bindValue(':user_id', $user_id); //RETURNED FROM getReframeUserId()
     $statement->bindValue(':school', $school);
     $statement->bindValue(':grad_year', $grad_year);
     $statement->bindValue(':major', $major);
@@ -83,6 +84,8 @@ class ReframeApi {
   }
 
   function addNewMentee($grade, $interest) {
+    $user_id = $this->getReframeUserId(); //A USER'S ID
+
     $sql = "INSERT INTO mentee (mentee_id, user_id, grade, interest)
     VALUES (null, :user_id, :grade, :interest)";
 
@@ -90,7 +93,7 @@ class ReframeApi {
     $statement = $this->pdo->prepare($sql);
 
     //bind
-    $statement->bindValue(':user_id', $this->getReframeUserId());
+    $statement->bindValue(':user_id', $user_id); //RETURNED FROM getReframeUserId()
     $statement->bindValue(':grade', $grade);
     $statement->bindValue(':interest', $interest);
 
@@ -188,6 +191,7 @@ if($_GET['action'] == "addNewUser") {
   } else {
     $reframe_api->addNewMentee($_GET['grade'], $_GET['interest']);
   }
+  
   //DEBUGGING STUFF BELOW//
   // $reframe_api->addNewPerson('4321', 'Brock', 'Lessner', 'wwf.com/images', 'blessner@wwe.com', 'mentor', 'mathematics', 'This is my bio. This is a test.');
   // ADD MENTOR
