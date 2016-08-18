@@ -29,7 +29,7 @@ class ReframeApi {
 
     //Prepare our statement.
     $statement = $this->pdo->prepare($sql);
-echo var_dump($statement);
+
     //bind
     $statement->bindValue(':facebook_id', $facebook_id);
     $statement->bindValue(':first_name', $first_name);
@@ -107,6 +107,7 @@ $reframe_api = new ReframeApi($pdo);
 if($_GET['action'] == "addNewUser") {
   $reframe_api->addNewPerson($_GET['facebook_id'], $_GET['first_name'], $_GET['last_name'], $_GET['image_url'], $_GET['email'], $_GET['user_type'], $_GET['stem_tags'], $_GET['bio']);
   // $reframe_api->addNewPerson('4321', 'Brock', 'Lessner', 'wwf.com/images', 'blessner@wwe.com', 'mentor', 'mathematics', 'This is my bio. This is a test.');
+  //http://reframe.modernrockstar.com/lib/api.php?action=addNewUser&facebook_id=1234567&first_name=Wayne&last_name=Campbell&image_url=imageurl.com&email=wcampbell@pacbell.com&user_type=mentor&stem_tags=mathematics&bio=My%20Bio
 }
 
 if($_GET['action'] == "getUserInfoByFacebookId") {
