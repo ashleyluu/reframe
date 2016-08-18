@@ -59,18 +59,15 @@ function getUserFacebookId() {
 
 function registration() {
   FB.api('/me', {fields: 'first_name,last_name,email'}, function(response) {
-    var first_name = response.first_name;
-    var last_name = response.last_name;
-    var email = response.email;
     var modal = document.getElementById('registration');
     var mentor = document.getElementById('mentorButton');
     var mentee = document.getElementById('menteeButton');
     var cancel = document.getElementById('cancel');
     var submit = document.getElementById('submit');
     modal.style.display = 'block';
-    document.getElementById('fname').value = first_name;
-    document.getElementById('lname').value = last_name;
-    document.getElementById('email').value = email;
+    document.getElementById('fname').value = response.first_name;
+    document.getElementById('lname').value = response.last_name;
+    document.getElementById('email').value = response.email;
     mentor.onclick = function() {
       document.getElementById('mentorFields').style.display = 'block';
       document.getElementById('menteeFields').style.display = 'none';
@@ -87,59 +84,64 @@ function registration() {
       modal.style.display = 'none';
     }
     submit.onclick = function() {
-      addNewUser();
+      // addNewUser();
       modal.style.display = 'none';
-      location.href = 'profile.html';
+      // location.href = 'profile.html';
     }
   });
 }
 
-var payload = function() {
-  JSON.stringify({
-    user_id: ,
-    facebook_id: ,
-    first_name: ,
-    last_name: ,
-    image_url: ,
-    email: ,
-    user_type: ,
-    stem_tags: ,
-    bio:
-  })
-  console.log();
-}
+// we want to put the data in this variable and then just plug it into the ajax call below. the variables i want to use are above.
+var payload = {
+  'facebook_id':
+  'first_name':
+  'last_name':
+  'image_url':
+  'email':
+  'stem_tags':
+  'bio':
+};
 
-
-//   if (mentor) {
-//     school: ,
-//     grad_year: ,
-//     major: ,
-//     skills:
-//   } else {
-//     grade: ,
-//     interest:
-//   }
-// };
+console.log(payload);
 
 function addNewUser() {
   $.ajax({
     method: 'GET',
     url: "http://reframe.modernrockstar.com/lib/api.php?action=addNewUser",
     datatype: 'json',
-    data: payload
+    data: {
+      payload,
+      status: '1'
+    }
   }).done(function(data) {
       console.log(data);
   });
 }
 
-function successfulLogIn() {
-  console.log('Welcome! Fetching your information...');
-  FB.api('/me', function(response) {
-    console.log('Successful login for: ' + response.name);
-    document.getElementById('status').innerHTML =
-      'Thanks for logging in, ' + response.name + '!';
-  });
-}
+// function userTypeFilter() {
+//   var mentor = document.getElementById('mentorButton');
+//   var school = $('#school').val();
+//   var gradYear = $('#grad-year').val();
+//   var major = $('#major').val();
+//   var skills = $('#skills').val();
+//   var grade = $('#grade').val();
+//   var interest = $('#interest').val();
+//   if (mentor.disabled = true) {
+//     JSON.stringify({
+//       user_type: 'mentor',
+//       school: school,
+//       grad_year: gradYear,
+//       major: major,
+//       skills: skills,
+//     });
+//   } else {
+//     JSON.stringify({
+//       user_type: 'mentee',
+//       grade: grade,
+//       interest: interest,
+//     });
+//   }
+// };
 
 // function checkFB() {
 //   FB.api(
