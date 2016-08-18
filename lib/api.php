@@ -98,12 +98,6 @@ class ReframeApi {
 //CREATE INSTANCE OF REFRAME API CLASS
 $reframe_api = new ReframeApi($pdo);
 
-// if ($_SERVER["REQUEST_METHOD"] == "POST") {
-//
-// } elseif($_SERVER["REQUEST_METHOD"] == "GET") {
-//
-// }
-
 if($_GET['action'] == "addNewUser") {
   $reframe_api->addNewPerson($_GET['facebook_id'], $_GET['first_name'], $_GET['last_name'], $_GET['image_url'], $_GET['email'], $_GET['user_type'], $_GET['stem_tags'], $_GET['bio']);
   // $reframe_api->addNewPerson('4321', 'Brock', 'Lessner', 'wwf.com/images', 'blessner@wwe.com', 'mentor', 'mathematics', 'This is my bio. This is a test.');
@@ -114,7 +108,9 @@ if($_GET['action'] == "getUserInfoByFacebookId") {
   $reframe_api->getUserInfoByFacebookId($_GET['facebook_id']);
 }
 
-
+/*
+  NOTHING USERFUL BELOW. ALL TEST CODE
+ */
 
 //$reframe_api->addNewPerson('8888', 'Wiggles', 'Maddela', 'http://modernrockstar.com/image', 'joe@modernrockstar.com', 'mentor', 'Technology', 'Here is my bio.');
 
