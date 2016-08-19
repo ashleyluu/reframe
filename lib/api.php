@@ -19,6 +19,7 @@ class ReframeApi {
   function setReframeUserId($new_user_id) {
     $this->reframe_user_id = $new_user_id;
   }
+
   /**
    * [ADDS A NEW USER TO THE REFRAME PERSON TABLE AND RETURN NEW USER ID]
    * @param [type] $facebook_id [description]
@@ -105,6 +106,47 @@ class ReframeApi {
     }
   }
 
+
+  function applyForMentorship($mentee_id, $mentor_id) {
+    $sql = "INSERT INTO mentoring_pair (mentor_id, mentee_id, date_applied, relationship)
+            VALUES (:mentor_id, :mentee_id, CURDATE(), 'applied')";
+
+    //Prepare our statement.
+    $statement = $this->pdo->prepare($sql);
+
+    //bind
+    $statement->bindValue(':mentee_id', $mentee_id);
+    $statement->bindValue(':mentor_id', $mentor_id);
+
+    //Execute the statement and insert our values.
+    $inserted = $statement->execute();
+
+    if($inserted) {
+      echo "Applied successfully"; //USE THIS ONLY FOR DEBUGGIN
+    }
+  }
+
+  function acceptMentee($mentor_id, $mentee_id) {
+    $sql = "UPDATE mentoring_pair
+            SET date_accepted = CURDATE(),
+                relationship = 'accepted'
+            WHERE (mentor_id = :mentor_id AND mentee_id = :mentee_id)";
+
+    //Prepare our statement.
+    $statement = $this->pdo->prepare($sql);
+
+    //bind
+    $statement->bindValue(':mentor_id', $mentor_id);
+    $statement->bindValue(':mentee_id', $mentee_id);
+
+    //Execute the statement and insert our values.
+    $inserted = $statement->execute();
+
+    if($inserted) {
+      echo "Mentor accepted a mentee successfully"; //USE THIS ONLY FOR DEBUGGIN
+    }
+  }
+
   /**
    * [getUserInfoByFacebookId Retrieve a Reframe user by FB-ID. If user found, return status=1 else status=0]
    * @param  [type] $facebook_id [returned by Facebook Login]
@@ -183,6 +225,9 @@ class ReframeApi {
 //CREATE INSTANCE OF REFRAME API CLASS
 $reframe_api = new ReframeApi($pdo);
 
+/*
+ADD A NEW USER
+ */
 if($_GET['action'] == "addNewUser") {
   $reframe_api->addNewPerson($_GET['facebook_id'], $_GET['first_name'], $_GET['last_name'], $_GET['image_url'], $_GET['email'], $_GET['user_type'], $_GET['stem_tags'], $_GET['bio']);
 
@@ -191,7 +236,7 @@ if($_GET['action'] == "addNewUser") {
   } else {
     $reframe_api->addNewMentee($_GET['grade'], $_GET['interest']);
   }
-  
+
   //DEBUGGING STUFF BELOW//
   // $reframe_api->addNewPerson('4321', 'Brock', 'Lessner', 'wwf.com/images', 'blessner@wwe.com', 'mentor', 'mathematics', 'This is my bio. This is a test.');
   // ADD MENTOR
@@ -200,9 +245,32 @@ if($_GET['action'] == "addNewUser") {
   //http://reframe.modernrockstar.com/lib/api.php?action=addNewUser&facebook_id=1234567&first_name=Wayne&last_name=Campbell&image_url=imageurl.com&email=wcampbell@pacbell.com&user_type=mentee&stem_tags=mathematics&bio=My%20Bio&grade=5th&interest=sports
 }
 
+/*
+GET A USER'S INFO
+ */
 if($_GET['action'] == "getUserInfoByFacebookId") {
   $reframe_api->getUserInfoByFacebookId($_GET['facebook_id']);
 }
+
+/*
+MENTEE APPLIES FOR A MENTOR
+  -USUALLY CHECK TO PREVENT REAPPLYING. SKIPPING THIS METHOD
+*/
+if($_GET['action'] == "applyForMentorship") {
+ $reframe_api->applyForMentorship($_GET['mentee_id'], $_GET['mentor_id']);
+}
+//http://reframe.local/lib/api.php?action=applyForMentorship&mentee_id=999&mentor_id=888
+
+if($_GET['action'] == "acceptMentee") {
+ $reframe_api->acceptMentee($_GET['mentor_id'], $_GET['mentee_id']);
+}
+//http://reframe.local/lib/api.php?action=acceptMentee&mentee_id=2&mentor_id=1
+
+
+
+
+
+
 
 /*
   NOTHING USERFUL BELOW. ALL TEST CODE
