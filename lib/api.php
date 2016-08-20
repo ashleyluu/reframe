@@ -319,13 +319,39 @@ class ReframeApi {
 
 
 
-
-
-
-
-
 //CREATE INSTANCE OF REFRAME API CLASS
 $reframe_api = new ReframeApi($pdo);
+
+
+
+
+/*
+APIS FOR INTERACTING WITH REFRAME
+
+  ADD A NEW USER
+    addNewUser()
+
+  GET A USER'S INFO WITH THEIR FB ID
+    getUserInfoByFacebookId()
+
+  MENTEE APPLIES FOR A MENTOR
+    applyForMentorship()
+
+  MENTOR ACCEPTS A MENTEE
+    acceptMentee
+
+  GET ALL RELATIONSHIPS FOR A USER
+    getAllRelationshipsForUser
+
+  CHECK IF A USER IS ALREADY A REGISTERED REFRAME MEMBER
+    isReframeUser
+
+
+*/
+
+
+
+
 
 /*
 ADD A NEW USER
@@ -338,13 +364,6 @@ if($_GET['action'] == "addNewUser") {
   } else {
     $reframe_api->addNewMentee($_GET['grade'], $_GET['interest']);
   }
-
-  //DEBUGGING STUFF BELOW//
-  // $reframe_api->addNewPerson('4321', 'Brock', 'Lessner', 'wwf.com/images', 'blessner@wwe.com', 'mentor', 'mathematics', 'This is my bio. This is a test.');
-  // ADD MENTOR
-  //http://reframe.modernrockstar.com/lib/api.php?action=addNewUser&facebook_id=1234567&first_name=Wayne&last_name=Campbell&image_url=imageurl.com&email=wcampbell@pacbell.com&user_type=mentor&stem_tags=mathematics&bio=My%20Bio&school=calpoly&grad_year=2005&major=computerscience&skills=programming
-  // ADD MENTEE
-  //http://reframe.modernrockstar.com/lib/api.php?action=addNewUser&facebook_id=1234567&first_name=Wayne&last_name=Campbell&image_url=imageurl.com&email=wcampbell@pacbell.com&user_type=mentee&stem_tags=mathematics&bio=My%20Bio&grade=5th&interest=sports
 }
 
 /*
@@ -397,6 +416,14 @@ if($_GET['action'] == "isReframeUser") {
 /*
   NOTHING USERFUL BELOW. ALL TEST CODE
  */
+
+ //DEBUGGING STUFF BELOW//
+ // $reframe_api->addNewPerson('4321', 'Brock', 'Lessner', 'wwf.com/images', 'blessner@wwe.com', 'mentor', 'mathematics', 'This is my bio. This is a test.');
+ // ADD MENTOR
+ //http://reframe.modernrockstar.com/lib/api.php?action=addNewUser&facebook_id=1234567&first_name=Wayne&last_name=Campbell&image_url=imageurl.com&email=wcampbell@pacbell.com&user_type=mentor&stem_tags=mathematics&bio=My%20Bio&school=calpoly&grad_year=2005&major=computerscience&skills=programming
+ // ADD MENTEE
+ //http://reframe.modernrockstar.com/lib/api.php?action=addNewUser&facebook_id=1234567&first_name=Wayne&last_name=Campbell&image_url=imageurl.com&email=wcampbell@pacbell.com&user_type=mentee&stem_tags=mathematics&bio=My%20Bio&grade=5th&interest=socket_import_stream
+ 
 
 //$reframe_api->addNewPerson('8888', 'Wiggles', 'Maddela', 'http://modernrockstar.com/image', 'joe@modernrockstar.com', 'mentor', 'Technology', 'Here is my bio.');
 
