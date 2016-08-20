@@ -275,6 +275,43 @@ class ReframeApi {
     echo $jsonstring; //RETURN JSON
   }
 
+  function isReframeUser($facebook_id) {
+    $json = array(); //INIT JSON ARRAY
+
+    $sql = "SELECT user_id,
+                   facebook_id
+            FROM   person
+            WHERE  facebook_id = :facebook_id
+            ";
+
+    //Prepare our statement.
+    $statement = $this->pdo->prepare($sql);
+
+    //bind
+    $statement->bindValue(':facebook_id', $facebook_id);
+    //var_dump($statement);
+
+    //Execute the statement and insert our values.
+    $result = $statement->execute();
+    $result_count = $statement->rowCount();
+
+    if($result && $result_count != 0) {
+      $person = array(
+        'status' => '1'
+      );
+      array_push($json, $person);
+
+      $jsonstring = json_encode($json);
+    } else {
+      $status = array(
+        'status' => "0" //user cannot be found
+      );
+      array_push($json, $status);
+      $jsonstring = json_encode($json);
+    }
+    echo $jsonstring; //RETURN JSON
+  }
+
 
 } //END CLASS
 
@@ -322,7 +359,7 @@ MENTEE APPLIES FOR A MENTOR
   -USUALLY CHECK TO PREVENT REAPPLYING. SKIPPING THIS METHOD
 */
 if($_GET['action'] == "applyForMentorship") {
- $reframe_api->applyForMentorship($_GET['mentee_id'], $_GET['mentor_id']);
+  $reframe_api->applyForMentorship($_GET['mentee_id'], $_GET['mentor_id']);
 }
 //http://reframe.local/lib/api.php?action=applyForMentorship&mentee_id=999&mentor_id=888
 
@@ -330,7 +367,7 @@ if($_GET['action'] == "applyForMentorship") {
 MENTOR ACCEPTS A MENTEE
  */
 if($_GET['action'] == "acceptMentee") {
- $reframe_api->acceptMentee($_GET['mentor_id'], $_GET['mentee_id']);
+  $reframe_api->acceptMentee($_GET['mentor_id'], $_GET['mentee_id']);
 }
 //http://reframe.local/lib/api.php?action=acceptMentee&mentee_id=2&mentor_id=1
 
@@ -339,9 +376,18 @@ if($_GET['action'] == "acceptMentee") {
 GET ALL RELATIONSHIPS FOR A USER
  */
 if($_GET['action'] == "getAllRelationshipsForUser") {
- $reframe_api->getAllRelationshipsForUser($_GET['user_id'], $_GET['user_type']);
+  $reframe_api->getAllRelationshipsForUser($_GET['user_id'], $_GET['user_type']);
 }
 //http://reframe.local/lib/api.php?action=acceptMentee&mentee_id=2&mentor_id=1
+
+/*
+CHECK IF A USER IS ALREADY A REGISTERED REFRAME MEMBER
+ */
+if($_GET['action'] == "isReframeUser") {
+  $reframe_api->isReframeUser($_GET['facebook_id']);
+}
+//http://reframe.local/lib/api.php?action=isReframeUser&facebook_id=1221
+
 
 
 
