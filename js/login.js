@@ -1,3 +1,97 @@
+// Login form data will be stored in payload to be sent to the server after submit
+
+// Modal and modal contents
+var modal = document.getElementById('registration');
+var mentor = document.getElementById('mentorButton');
+var mentee = document.getElementById('menteeButton');
+var mentorFields = document.getElementById('mentorFields');
+var menteeFields = document.getElementById('menteeFields');
+var cancel = document.getElementById('cancel');
+var submit = document.getElementById('submit');
+
+// Form fields
+var facebookId = document.getElementById('facebook-id');
+var imageUrl = document.getElementById('image-url');
+var fName = document.getElementById('fname');
+var lName = document.getElementById('lname');
+var email = document.getElementById('email');
+var school = document.getElementById('school');
+var gradYear = document.getElementById('grad-year');
+var major = document.getElementById('major');
+var skills = document.getElementById('skills');
+var bio = document.getElementById('bio');
+var grade = document.getElementById('grade');
+var interest = document.getElementById('interest');
+var stemTags = document.getElementById('stem-tags');
+
+// Modal visibility
+function showModal () {
+  modal.style.display = 'block';
+}
+
+function hideModal () {
+  modal.style.display = 'none';
+}
+
+// Visible profile fields based on user type
+function showMentorFields () {
+  mentorFields.style.display = 'block';
+  menteeFields.style.display = 'none';
+  mentor.disabled = true;
+  mentee.disabled = false;
+}
+
+function showMenteeFields () {
+  menteeFields.style.display = 'block';
+  mentorFields.style.display = 'none';
+  mentee.disabled = true;
+  mentor.disabled = false;
+}
+
+// Add event handler
+mentor.addEventListener('click', showMentorFields);
+mentee.addEventListener('click', showMenteeFields);
+cancel.addEventListener('click', hideModal);
+submit.addEventListener('click', addNewUser);
+
+function populateFieldsFromFB (response) {
+  facebookId.value = response.id;
+  imageUrl.value = response.picture.data.url;
+  fName.value = response.first_name;
+  lName.value = response.last_name;
+  email.value = response.email;
+}
+
+// Send user info
+function addNewUser() {
+  var payload = {
+    facebook_id: facebookId.value,
+    first_name: fName.value,
+    last_name: lName.value,
+    image_url: imageUrl.value,
+    email: email.value,
+    school: school.value,
+    grad_year: gradYear.value,
+    user_type: 'mentor',
+    major: major.value,
+    skills: skills.value,
+    stem_tags: stemTags.value,
+    bio: bio.value,
+    grade: grade.value,
+    interest: interest.value,
+  };
+  $.ajax({
+    method: 'GET',
+    url: 'http://reframe.modernrockstar.com/lib/api.php?action=addNewUser',
+    datatype: 'json',
+    data: payload
+  }).done(function(data) {
+      console.log(data);
+      hideModal();
+  });
+}
+
+// Facebook callback
 function statusChangeCallback(response) {
   console.log('statusChangeCallback');
   console.log(response);
@@ -24,16 +118,17 @@ window.fbAsyncInit = function() {
     xfbml      : true,
     version    : 'v2.7'
   });
-
   FB.getLoginStatus(function(response) {
     statusChangeCallback(response);
   });
 };
 
+// Verify if user is new, then prompt registration
 function getUserFacebookId() {
   FB.getLoginStatus(function(response) {
     if (response.status === 'connected') {
       var uid = response.authResponse.userID;
+      console.log(uid)
       $.ajax({
         method: 'GET',
         url: 'http://reframe.modernrockstar.com/lib/api.php?action=getUserInfoByFacebookId',
@@ -48,113 +143,21 @@ function getUserFacebookId() {
             if (userStatus === '0') {
               registration();
             } else {
-              location.href = 'profile.html';
+              // location.href = 'profile.html';
             }
           });
         });
-      successfulLogIn();
     }
   });
 }
 
+// Get user data from Facebook API
 function registration() {
-  FB.api('/me', {fields: 'first_name,last_name,email'}, function(response) {
-    var modal = document.getElementById('registration');
-    var mentor = document.getElementById('mentorButton');
-    var mentee = document.getElementById('menteeButton');
-    var cancel = document.getElementById('cancel');
-    var submit = document.getElementById('submit');
-    modal.style.display = 'block';
-    document.getElementById('fname').value = response.first_name;
-    document.getElementById('lname').value = response.last_name;
-    document.getElementById('email').value = response.email;
-    mentor.onclick = function() {
-      document.getElementById('mentorFields').style.display = 'block';
-      document.getElementById('menteeFields').style.display = 'none';
-      mentor.disabled = true;
-      mentee.disabled = false;
-    }
-    mentee.onclick = function() {
-      document.getElementById('menteeFields').style.display = 'block';
-      document.getElementById('mentorFields').style.display = 'none';
-      mentee.disabled = true;
-      mentor.disabled = false;
-    }
-    cancel.onclick = function() {
-      modal.style.display = 'none';
-    }
-    submit.onclick = function() {
-      // addNewUser();
-      modal.style.display = 'none';
-      // location.href = 'profile.html';
-    }
+  FB.api('/me', {fields: 'first_name,last_name,email,id,picture'}, function(response) {
+    showModal();
+    populateFieldsFromFB(response);
   });
 }
-
-// we want to put the data in this variable and then just plug it into the ajax call below. the variables i want to use are above.
-var payload = {
-  'facebook_id':
-  'first_name':
-  'last_name':
-  'image_url':
-  'email':
-  'stem_tags':
-  'bio':
-};
-
-console.log(payload);
-
-function addNewUser() {
-  $.ajax({
-    method: 'GET',
-    url: "http://reframe.modernrockstar.com/lib/api.php?action=addNewUser",
-    datatype: 'json',
-    data: {
-      payload,
-      status: '1'
-    }
-  }).done(function(data) {
-      console.log(data);
-  });
-}
-
-// function userTypeFilter() {
-//   var mentor = document.getElementById('mentorButton');
-//   var school = $('#school').val();
-//   var gradYear = $('#grad-year').val();
-//   var major = $('#major').val();
-//   var skills = $('#skills').val();
-//   var grade = $('#grade').val();
-//   var interest = $('#interest').val();
-//   if (mentor.disabled = true) {
-//     JSON.stringify({
-//       user_type: 'mentor',
-//       school: school,
-//       grad_year: gradYear,
-//       major: major,
-//       skills: skills,
-//     });
-//   } else {
-//     JSON.stringify({
-//       user_type: 'mentee',
-//       grade: grade,
-//       interest: interest,
-//     });
-//   }
-// };
-
-// function checkFB() {
-//   FB.api(
-//     "/me/picture",
-//     function (response) {
-//       if (response && !response.error) {
-//         var img = document.createElement('img');
-//         img.src = response.data.url;
-//         document.getElementById('photo').appendChild(img);
-//       }
-//     }
-//   );
-// }
 
 // Load the SDK asynchronously
 (function(d, s, id) {

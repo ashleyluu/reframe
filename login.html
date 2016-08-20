@@ -6,7 +6,6 @@
     <link rel="stylesheet" href="css/login.css">
     <link href='https://fonts.googleapis.com/css?family=Roboto:400,300italic,300,400italic,500,500italic' rel='stylesheet' type='text/css'>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-    <script src="js/login.js"></script>
   </head>
 <body>
   <header>
@@ -27,23 +26,25 @@
         <h2>Create your Reframe profile</h2>
       </div>
       <div class="modal-body">
-        <div id="form">
+        <form id="form">
+          <input type="hidden" id="facebook-id">
+          <input type="hidden" id="image-url">
           first name: <input type="text" id="fname"><br>
           last name: <input type="text" id="lname"><br>
           email address: <input type="text" id="email"><br>
           <button type="submit" id="mentorButton">mentor</button>
           <button type="submit" id="menteeButton">mentee</button>
-          <form id="mentorFields">
+          <div id="mentorFields">
             school: <input type="text" id="school"><br>
             grad year: <input type="text" id="grad-year"><br>
             major: <input type="text" id="major"><br>
             stem field: <input type="text" id="stem-tags"><br>
             skills: <input type="text" id="skills"><br>
             bio: <input type="text" id="bio">
-          </form>
-          <form id="menteeFields">
+          </div>
+          <div id="menteeFields">
             grade: <input type="text" id="grade"><br>
-            interests: <input type="text" id="interests"><br>
+            interests: <input type="text" id="interest"><br>
             stem field: <input type="text" id="stem-tags"><br>
             bio: <input type="text" id="bio">
           </div>
@@ -55,5 +56,6 @@
       </div>
     </div>
   </div>
+  <script src="js/login.js"></script>
 </body>
 </html>
