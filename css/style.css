@@ -1,5 +1,18 @@
 body {
-  text-align: center;
-  font-family: "Roboto";
-  font-weight: 400;
+  font-family: 'Roboto';
+  font-size: 14px;
+  line-height: 19px;
+}
+
+h1 {
+  font-family: 'Open Sans';
+  font-size: 75px;
+  line-height: 80px;
+  color: #5BC0BE;
+}
+
+nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
 }
