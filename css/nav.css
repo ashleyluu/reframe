@@ -1,0 +1,39 @@
+nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #ffffff;
+  border-bottom: 1px solid #ededed;
+  text-transform: uppercase;
+  font-size: 14px;
+  font-weight: 100;
+  letter-spacing: 1.5px;
+}
+
+nav li {
+  float: left;
+}
+
+nav #status {
+  float: right;
+}
+
+nav li a {
+  display: block;
+  color: #666666;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+nav li a:hover {
+  background-color: #CBF3F0;
+}
+
+nav .photo {
+  margin: 0 10px;
+  height: 44px;
+  width: 44px;
+  border-radius: 50%;
+}
