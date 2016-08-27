@@ -1,7 +1,6 @@
 // Login form data will be stored in payload to be sent to the server after submit
 
 // Modal and modal contents
-var button = document.getElementById('status');
 var modal = document.getElementById('registration');
 var mentor = document.getElementById('mentorButton');
 var mentee = document.getElementById('menteeButton');
@@ -50,8 +49,6 @@ function showMenteeFields () {
 }
 
 // Add event handler
-showModal();
-button.addEventListener('click', showModal);
 mentor.addEventListener('click', showMentorFields);
 mentee.addEventListener('click', showMenteeFields);
 cancel.addEventListener('click', hideModal);
