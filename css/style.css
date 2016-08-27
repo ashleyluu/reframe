@@ -8,6 +8,19 @@ body {
   color: #666666;
 }
 
+h1 {
+  font-size: 48px;
+  font-weight: 100;
+  line-height: 52px;
+  text-align: center;
+}
+
+h2 {
+  font-size: 30px;
+  font-weight: 200;
+  line-height: 36px;
+}
+
 a {
   text-decoration: none;
 }

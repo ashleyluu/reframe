@@ -3,24 +3,24 @@
   <head>
     <title>Reframe</title>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/login.css">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/login.css">
+    <link rel="stylesheet" href="../css/nav.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
   </head>
 <body>
   <nav>
     <ul>
-      <li>sign up</li>
-      <li>log in</li>
+      <li><a href="#">About</a></li>
+      <li><a href="#">Contact Us</a></li>
+      <li id="status"><a href="#">Log In</a></li>
     </ul>
   </nav>
     <h1>reframe</h1>
     <fb:login-button autologoutlink="true" scope="public_profile,email" onlogin="checkLoginState();">
     </fb:login-button>
 
-    <div id="status"></div>
+    <!-- <div id="status"></div> -->
 
     <!-- The Modal -->
     <div id="registration" class="modal">
@@ -34,24 +34,37 @@
         <form id="form">
           <input type="hidden" id="facebook-id">
           <input type="hidden" id="image-url">
-          first name: <input type="text" id="fname"><br>
-          last name: <input type="text" id="lname"><br>
-          email address: <input type="text" id="email"><br>
-          <button type="submit" id="mentorButton">mentor</button>
-          <button type="submit" id="menteeButton">mentee</button>
+          <img src="../img/default-user.png" alt="" class="photo" />
+          <div class="modal-text">First Name</div>
+          <input type="text" class="input-text-field" id="fname"><br>
+          <div class="modal-text">Last Name</div>
+          <input type="text" class="input-text-field" id="lname"><br>
+          <div class="modal-text">Email Address</div>
+          <input type="text" class="input-text-field" id="email"><br>
+          <input type="radio" id="mentorButton">mentor
+          <input type="radio" id="menteeButton">mentee
           <div id="mentorFields">
-            school: <input type="text" id="school"><br>
-            grad year: <input type="text" id="grad-year"><br>
-            major: <input type="text" id="major"><br>
-            stem field: <input type="text" id="stem-tags"><br>
-            skills: <input type="text" id="skills"><br>
-            bio: <input type="text" id="bio">
+            <div class="modal-text">School:</div>
+            <input type="text" class="input-text-field" id="school"><br>
+            <div class="modal-text">Grad Year:</div>
+            <input type="text" class="input-text-field" id="grad-year"><br>
+            <div class="modal-text">Major:</div>
+            <input type="text" class="input-text-field" id="major"><br>
+            <div class="modal-text">Stem Field:</div>
+            <input type="text" class="input-text-field" id="stem-tags"><br>
+            <div class="modal-text">Skills:</div>
+            <input type="text" class="input-text-field" id="skills"><br>
+            Bio: <input type="text" class="input-text-field" id="bio">
           </div>
           <div id="menteeFields">
-            grade: <input type="text" id="grade"><br>
-            interests: <input type="text" id="interest"><br>
-            stem field: <input type="text" id="stem-tags"><br>
-            bio: <input type="text" id="bio">
+            <div class="modal-text">Grade:</div>
+            <input type="text" class="input-text-field" id="grade"><br>
+            <div class="modal-text">Interests:</div>
+            <input type="text" class="input-text-field" id="interest"><br>
+            <div class="modal-text">Stem Field:</div>
+            <input type="text" class="input-text-field" id="stem-tags"><br>
+            <div class="modal-text">Bio:</div>
+            <input type="text" class="input-text-field" id="bio">
           </div>
         </form>
       </div>
@@ -61,6 +74,6 @@
       </div>
     </div>
   </div>
-  <script src="js/login.js"></script>
+  <script src="../js/login.js"></script>
 </body>
 </html>
