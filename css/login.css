@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 .clearfix:after {
   content: '.';
   visibility: hidden;
@@ -11,7 +15,7 @@
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
   z-index: 1; /* Sit on top */
-  padding-top: 100px; /* Location of the box */
+  padding-top: 50px; /* Location of the box */
   left: 0;
   top: 0;
   width: 100%; /* Full width */
@@ -28,12 +32,12 @@
   margin: auto;
   padding: 0;
   border: 1px solid #888;
-  width: 80%;
+  width: 40%;
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
   -webkit-animation-name: animatetop;
   -webkit-animation-duration: 0.4s;
   animation-name: animatetop;
-  animation-duration: 0.4s
+  animation-duration: 0.4s;
 }
 
 /* Add Animation */
@@ -47,40 +51,72 @@
   to {top:0; opacity:1}
 }
 
-.button {
-  display: inline;
-  float: right;
-  padding: 8px 15px;
-  margin-left: 5px;
-  font-size: 16px;
-  background-color: #ffcc99;
-  color: #ffffff;
-}
-
-.button:hover,
-.button:focus {
-  color: #000000;
-  text-decoration: none;
-  cursor: pointer;
+#mentorFields,
+#menteeFields {
+  display: none;
 }
 
 .modal-header {
   padding: 2px 16px;
+  text-align: center;
   background-color: #ffffff;
-  color: #000000;
+  color: #666666;
 }
 
 .modal-body {
-  padding: 2px 16px;
+  margin: 0 auto;
+  width: 80%;
+}
+
+.modal-text {
+  text-align: left;
 }
 
 .modal-footer {
+  text-align: center;
   padding: 2px 16px;
   background-color: #ffffff;
   color: #ffffff;
 }
 
-#mentorFields,
-#menteeFields {
-  display: none;
+.photo {
+  margin: 30px auto;
+  height: 150px;
+  width: 150px;
+  border-radius: 50%;
+  display: block;
+}
+
+.input-text-field {
+  width: 100%;
+  border: 1px solid #ededed;
+  padding: 8px;
+  margin: 0 0 10px 0;
+  outline: 0;
+  font-size: 14px;
+  font-weight: 100;
+  color: #666666;
+}
+
+.input-text-field:focus {
+  border-bottom: 2px solid #FFBF69;
+}
+
+.button {
+  margin: 10px;
+  padding: 10px 30px;
+  border: 1px solid #2EC4B6;
+  border-radius: 0;
+  color: #2EC4B6;
+  display: inline-block;
+  font-size: 14px;
+  text-decoration: none;
+  -webkit-border-radius: 0;
+}
+
+.button:hover {
+  border: 1px solid #FFBF69;
+  color: #FFBF69;
+  text-decoration: none;
+  cursor: pointer;
 }

@@ -1,19 +1,11 @@
-body {
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-	font-size: 14px;
-	font-style: normal;
-	font-variant: normal;
-	font-weight: 400;
-	line-height: 20px;
-}
-
-a {
-  text-decoration: none;
-}
-
 #mentor-basic-info div {
   margin: 0 10px;
   display: inline-block;
+}
+
+.gray-background {
+  padding: 40px 0;
+  background-color: #f6f6f6;
 }
 
 .photo {
@@ -26,16 +18,16 @@ a {
 .name {
   margin: 20px 0;
   font-size: 48px;
-  line-height: 52px;
   font-weight: 100;
+  line-height: 52px;
 }
 
 .button {
   margin: 0 5px 20px;
   padding: 10px 30px;
-  border: 1px solid #5BC0BE;
+  border: 1px solid #2EC4B6;
   border-radius: 0;
-  color: #5BC0BE;
+  color: #2EC4B6;
   display: inline-block;
   font-size: 14px;
   text-decoration: none;
@@ -54,11 +46,6 @@ a {
   line-height: 42px;
 }
 
-.stem {
-  padding: 40px 0;
-  background-color: #f6f6f6;
-}
-
 .stem-icons {
   margin: 10px;
   height: 150px;
@@ -73,12 +60,31 @@ a {
   padding: 40px 0;
 }
 
-.followers {
+.follower {
   margin: 10px 50px;
   height: 110px;
   width: 110px;
   display: inline-block;
   border: 1px solid #dddddd;
   border-radius: 50%;
-  background-color: #ffffff
+  background-color: #ffffff;
+}
+
+.review {
+  margin: 10px 0 75px;
+  height: 110px;
+  width: 110px;
+  display: block;
+  border: 1px solid #dddddd;
+  border-radius: 50%;
+  background-color: #ffffff;
+}
+
+.column-container {
+  width: 100%;
+}
+
+.column {
+  width: 50%;
+  float: left;
 }
