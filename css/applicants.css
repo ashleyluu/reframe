@@ -1,0 +1,65 @@
+.clearfix {
+  clear: both;
+}
+
+#list {
+  margin: 0 auto;
+  width: 50%;
+}
+
+.applicant {
+  margin: 0 0 20px;
+  width: 100%;
+  border: 1px solid #ededed;
+}
+
+.column {
+  width: 48%;
+  display: inline-block;
+}
+
+.applicant .photo {
+  margin: 20px 30px 20px 20px;
+  height: 75px;
+  width: 75px;
+  border-radius: 50%;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.applicant .text {
+  display: inline;
+  margin: auto;
+  font-size: 18px;
+}
+
+.relationship {
+  text-align: right;
+  vertical-align: middle;
+}
+
+.button {
+  margin: 0 5px;
+  padding: 10px 30px;
+  border: 1px solid #2EC4B6;
+  border-radius: 0;
+  color: #2EC4B6;
+  display: inline-block;
+  font-size: 14px;
+  text-decoration: none;
+  -webkit-border-radius: 0;
+}
+
+.button:hover.accept {
+  border: 1px solid #3DCD3D;
+  color: #3DCD3D;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.button:hover.defer {
+  border: 1px solid #F78D8D;
+  color: #F78D8D;
+  text-decoration: none;
+  cursor: pointer;
+}
