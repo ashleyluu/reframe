@@ -1,0 +1,53 @@
+.App {}
+
+.navigation {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #eee;
+  height: 60px;
+  line-height: 65px;
+  padding: 0px 20px;
+}
+
+.nav-links {
+  display: flex;
+}
+
+.link {
+  text-align: center;
+  min-width: 100px;
+  height: 100%;
+  padding: 0px 10px;
+}
+
+.link:last-child {
+  padding-right: 0px;
+}
+
+.link:hover {
+  border-bottom: 3px solid #CBF3F0;
+}
+
+
+.modal-container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0,0,0,0.8);
+}
+
+.modal-content {
+  background: white;
+  width: 60%;
+  margin: 100px auto;
+  padding: 50px;
+
+}
+
+.profile-pic {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+}
