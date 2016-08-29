@@ -86,7 +86,7 @@ class ReframeApi {
 
   function addNewMentee($grade, $interest) {
     $user_id = $this->getReframeUserId(); //A USER'S ID
-
+    
     $sql = "INSERT INTO mentee (mentee_id, user_id, grade, interest)
     VALUES (null, :user_id, :grade, :interest)";
 
@@ -422,8 +422,8 @@ if($_GET['action'] == "isReframeUser") {
  // ADD MENTOR
  //http://reframe.modernrockstar.com/lib/api.php?action=addNewUser&facebook_id=1234567&first_name=Wayne&last_name=Campbell&image_url=imageurl.com&email=wcampbell@pacbell.com&user_type=mentor&stem_tags=mathematics&bio=My%20Bio&school=calpoly&grad_year=2005&major=computerscience&skills=programming
  // ADD MENTEE
- //http://reframe.modernrockstar.com/lib/api.php?action=addNewUser&facebook_id=1234567&first_name=Wayne&last_name=Campbell&image_url=imageurl.com&email=wcampbell@pacbell.com&user_type=mentee&stem_tags=mathematics&bio=My%20Bio&grade=5th&interest=socket_import_stream
- 
+ //http://reframe.modernrockstar.com/lib/api.php?action=addNewUser&facebook_id=1234567&first_name=Harley&last_name=Quinn&image_url=imageurl.com&email=hquinn@pacbell.com&user_type=mentee&stem_tags=mathematics&bio=My%20Bio&grade=5th&interest=iOSDevelopment
+
 
 //$reframe_api->addNewPerson('8888', 'Wiggles', 'Maddela', 'http://modernrockstar.com/image', 'joe@modernrockstar.com', 'mentor', 'Technology', 'Here is my bio.');
 
