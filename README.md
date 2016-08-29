@@ -2,11 +2,14 @@ To-do list for Sunday
 
 ASHLEY
 - Research statistics and studies
-- Write documentation for submission
+- Write rough draft of documentation for submission
 - Write about and contact pages
 - Design home page
+- Create STEM field icons for profile page
+- Create mentors list page
 
 JOSEPH
+- Debug mentee table
 - Build static pages: calendar and social features
 - Check relationships method
 - Create fake accounts
