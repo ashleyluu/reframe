@@ -9,7 +9,7 @@ ASHLEY
 - Create mentors list page
 
 JOSEPH
-- Debug mentee table
+- Debug mentee table [FIXED]
 - Build static pages: calendar and social features
 - Check relationships method
 - Create fake accounts
