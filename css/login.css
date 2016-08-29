@@ -87,7 +87,7 @@
   display: block;
 }
 
-.input-text-field {
+.input-text-field{
   width: 100%;
   border: 1px solid #ededed;
   padding: 8px;
@@ -96,6 +96,11 @@
   font-size: 14px;
   font-weight: 100;
   color: #666666;
+}
+
+select.input-text-field {
+  -webkit-appearance: none;
+  border-radius: 0px;
 }
 
 .input-text-field:focus {
