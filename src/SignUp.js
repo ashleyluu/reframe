@@ -1,24 +1,62 @@
 import React, { Component } from 'react';
-import './App.css';
+import './css/signup.css';
 
 
 const MenteeForm = props =>
   <div id="menteeFields">
-    grade: <input type="text" id="grade"/>
-    interests: <input type="text" id="interest"/>
-    stem field: <input type="text" id="stem-tags"/>
-    bio: <input type="text" id="bio"/>
+    <div className="field-label">Grade</div>
+    <input type="text"
+           className="input-text-field"
+           name="grade"
+    />
+    <div className="field-label">Interests</div>
+    <input type="text"
+           className="input-text-field"
+           name="interest"
+    />
+    <div className="field-label">Stem Field</div>
+    <StemFieldSelect />
+    <div className="field-label">Bio</div>
+    <textarea type="text"
+           className="input-text-field"
+           name="bio"
+           rows="6"
+    ></textarea>
+    <SignUpButtons {...props}/>
   </div>
 
 const MentorForm = props =>
   <div id="mentorFields">
-    school: <input type="text" id="school"/>
-    grad year: <input type="text" id="grad-year"/>
-    major: <input type="text" id="major"/>
-    stem field: <input type="text" id="stem-tags"/>
-    skills: <input type="text" id="skills"/>
-    bio: <input type="text" id="bio"/>
+    <div className="field-label">School</div>
+    <input type="text" className="input-text-field" name="school"/>
+    <div className="field-label">Grad Year</div>
+    <input type="text" className="input-text-field" name="grad_year"/>
+    <div className="field-label">Major</div>
+    <input type="text" className="input-text-field" name="major"/>
+    <div className="field-label">Stem Field</div>
+    <StemFieldSelect />
+    <div className="field-label">Skills</div>
+    <input type="text" className="input-text-field" name="skills"/>
+    <div className="field-label">Bio</div>
+    <textarea rows="6" type="text" className="input-text-field" name="bio"></textarea>
+    <SignUpButtons {...props}/>
   </div>
+
+const StemFieldSelect = props =>
+  <select type="text" value="" className="input-text-field" name="stem_tags">
+    <option value="" disabled>Select your option</option>
+    <option value="sciene">Science</option>
+    <option value="technology">Technology</option>
+    <option value="engineering">Engineering</option>
+    <option value="mathematics">Mathmatics</option>
+  </select>
+
+const SignUpButtons = props =>
+  <div className="signup-buttons">
+      <span onClick={props.closePortal} className="signup-button">cancel</span>
+     <span onClick={props.handleSubmit} className="signup-button">submit</span>
+  </div>
+
 
 class SignUp extends Component {
   constructor (props) {
@@ -35,9 +73,9 @@ class SignUp extends Component {
   formType () {
     switch (this.state.type) {
       case 'mentee':
-        return <MenteeForm values={this.props.values}/>;
+        return <MenteeForm {...this.props}/>;
       case 'mentor':
-        return <MentorForm values={this.props.values}/>;
+        return <MentorForm {...this.props}/>;
       default:
         return null;
     }
@@ -49,15 +87,27 @@ class SignUp extends Component {
     });
   }
 
+  handleChange() {
+
+  }
   render() {
     return (
-      <form id="form">
+      <form id="form" onChange={(e) => this.props.handleFormChanges(e)}>
         <img className="profile-pic" src={this.props.values.image_url} role='presentation'/>
-        first name: <input type="text" id="fname" defaultValue={this.props.values.first_name}/>
-        last name: <input type="text" id="lname" defaultValue={this.props.values.last_name}/>
-        email address: <input type="text" id="email" defaultValue={this.props.values.email}/>
-        <input type="radio" name="profileType" value="mentee" onClick={this.showForm}/> Mentee
-        <input type="radio" name="profileType" value="mentor" onClick={this.showForm}/> Mentor
+        <div className="field-label">First Name</div>
+        <input type="text" className="input-text-field" name="first_name" defaultValue={this.props.values.first_name}/>
+        <div className="field-label">Last Name</div>
+        <input type="text" className="input-text-field" name="last_name" defaultValue={this.props.values.last_name}/>
+        <div className="field-label">Email</div>
+        <input type="text" className="input-text-field" name="email" defaultValue={this.props.values.email}/>
+        <div style={{textAlign: 'center', margin: '10px 0px'}}>
+          <span className="input-radio-field">
+            <input type="radio" name="user_type" value="mentee" onClick={this.showForm}/> Mentee
+          </span>
+          <span className="input-radio-field">
+            <input type="radio" name="user_type" value="mentor" onClick={this.showForm}/> Mentor
+          </span>
+        </div>
         {this.formType()}
       </form>
     );
