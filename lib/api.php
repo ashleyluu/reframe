@@ -362,6 +362,74 @@ class ReframeApi {
     echo $jsonstring; //RETURN JSON
   }
 
+
+  /**
+   * [getAllMenteesWithStemTag]
+   * @param  [STRING] $stem_tag [OPTIONAL PARAM WITH 1 OF 4 OPTIONS]
+   * @return [JSON]           [JSON OF MENTORS LIST]
+   */
+  function getAllMenteesWithStemTag($stem_tag = null) {
+    $json = array(); //INIT JSON ARRAY
+
+    //CHECK TO SEE IF STEM IS VALID
+    $valid_stem_tags = array("science", "technology", "engineering", "mathematics");
+
+    if( !is_null($stem_tag) && in_array($stem_tag, $valid_stem_tags) ) {
+      $stem_filter = " AND stem_tags IN (:stem_tag)";
+    }
+
+    $sql = "SELECT user_id,
+            facebook_id,
+            first_name,
+            last_name,
+            image_url,
+            email,
+            user_type,
+            stem_tags,
+            bio
+            FROM person
+            WHERE user_type = 'mentee'" . $stem_filter .
+            " ORDER BY last_name ASC";
+
+    //Prepare our statement.
+    $statement = $this->pdo->prepare($sql);
+
+    //bind
+    $statement->bindValue(':stem_tag', $stem_tag);
+
+    //Execute the statement and insert our values.
+    $inserted = $statement->execute();
+    $result_count = $statement->rowCount();
+
+    if($inserted && $result_count != 0) {
+      while ($row = $statement->fetch())
+      {
+          $person = array(
+            'status' => '1',
+            'user_id' => $row['user_id'],
+            'facebook_id' => $row['facebook_id'],
+            'first_name' => $row['first_name'],
+            'last_name' => $row['last_name'],
+            'image_url' => $row['image_url'],
+            'email' => $row['email'],
+            'user_type' => $row['user_type'],
+            'stem_tags' => $row['stem_tags'],
+            'bio' => $row['bio']
+          );
+          array_push($json, $person);
+      }
+      $jsonstring = json_encode($json);
+    } else {
+      $status = array(
+        'status' => "0" //MENTEES WITH STEM TAG COULD NOT BE FOUND
+      );
+      array_push($json, $status);
+      $jsonstring = json_encode($json);
+    }
+    echo $jsonstring; //RETURN JSON
+  }
+
+
   function isReframeUser($facebook_id) {
     $json = array(); //INIT JSON ARRAY
 
@@ -412,6 +480,9 @@ $reframe_api = new ReframeApi($pdo);
 
 
 
+
+
+
 /*
 APIS FOR INTERACTING WITH REFRAME
 
@@ -433,8 +504,11 @@ APIS FOR INTERACTING WITH REFRAME
   GET ALL RELATIONSHIPS FOR A USER
     getAllRelationshipsForUser()
 
-  GET ALL MENTORS WITH STEM Focus
-    getAllMentorsWithStemFocus()
+  GET ALL MENTORS WITH STEM TAG
+    getAllMentorsWithStemTag()
+
+  GET ALL MENTEES WITH STEM TAG
+    getAllMenteesWithStemTag()
 
   CHECK IF A USER IS ALREADY A REGISTERED REFRAME MEMBER
     isReframeUser
@@ -491,6 +565,7 @@ if($_GET['action'] == "followMentor") {
 }
 //http://reframe.local/lib/api.php?action=followMentor&mentee_id=999&mentor_id=888
 
+
 /*
 GET ALL RELATIONSHIPS FOR A USER
  */
@@ -499,6 +574,7 @@ if($_GET['action'] == "getAllRelationshipsForUser") {
 }
 //http://reframe.local/lib/api.php?action=getAllRelationshipsForUser&mentee_id=2&user_type=(mentor/mentee)
 
+
 /*
 CHECK IF A USER IS ALREADY A REGISTERED REFRAME MEMBER
  */
@@ -506,6 +582,7 @@ if($_GET['action'] == "isReframeUser") {
   $reframe_api->isReframeUser($_GET['facebook_id']);
 }
 //http://reframe.local/lib/api.php?action=isReframeUser&facebook_id=1221
+
 
 /*
 GET ALL MENTORS IN ASCENDING ORDER BY LAST NAME WITH STEM TAG(OPTIONAL)
@@ -516,6 +593,13 @@ if($_GET['action'] == "getAllMentorsWithStemTag") {
 //http://reframe.local/lib/api.php?action=getAllMentorsWithStemTag&stem_tag=technology
 
 
+/*
+GET ALL MENTEE IN ASCENDING ORDER BY LAST NAME WITH STEM TAG(OPTIONAL)
+ */
+if($_GET['action'] == "getAllMenteesWithStemTag") {
+  $reframe_api->getAllMenteesWithStemTag($_GET['stem_tag']);
+}
+//http://reframe.local/lib/api.php?action=getAllMenteesWithStemTag&stem_tag=technology
 
 
 
