@@ -14,7 +14,7 @@ JOSEPH
 - Check relationships method [FIXED ISSUE]
 - Create fake accounts
 - Create method to retrieve mentors with optional stem field, ordered by last name ASC (a-z) [COMPLETED]
-- Create method to retrieve mentee with optional stem field, ordered by last name ASC (a-z)
+- Create method to retrieve mentee with optional stem field, ordered by last name ASC (a-z) [COMPLETED]
 - Copy
 
 KRIS
