@@ -10,7 +10,7 @@ ASHLEY
 
 JOSEPH
 - Debug mentee table [FIXED]
-- Build static pages: calendar and social features
+- Build static pages: calendar and social features [COMPLETED]
 - Check relationships method
 - Create fake accounts
 - Copy
