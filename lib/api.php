@@ -86,7 +86,7 @@ class ReframeApi {
 
   function addNewMentee($grade, $interest) {
     $user_id = $this->getReframeUserId(); //A USER'S ID
-    
+
     $sql = "INSERT INTO mentee (mentee_id, user_id, grade, interest)
     VALUES (null, :user_id, :grade, :interest)";
 
@@ -108,8 +108,8 @@ class ReframeApi {
 
 
   function applyForMentorship($mentee_id, $mentor_id) {
-    $sql = "INSERT INTO mentoring_pair (mentor_id, mentee_id, date_applied, relationship)
-            VALUES (:mentor_id, :mentee_id, CURDATE(), 'applied')";
+    $sql = "INSERT INTO mentoring_pair (relationship_id, mentor_id, mentee_id, date_applied, relationship)
+            VALUES (null, :mentor_id, :mentee_id, CURDATE(), 'applied')";
 
     //Prepare our statement.
     $statement = $this->pdo->prepare($sql);
