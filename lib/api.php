@@ -468,6 +468,51 @@ class ReframeApi {
   }
 
 
+  function getRelationship($mentor_id, $mentee_id) {
+    $json = array(); //INIT JSON ARRAY
+
+    $sql = "SELECT mentor_id, mentee_id, date_applied, date_accepted, relationship
+            FROM mentoring_pair
+            WHERE mentor_id = :mentor_id AND mentee_id = :mentee_id
+            LIMIT 1
+           ";
+
+    //Prepare our statement.
+    $statement = $this->pdo->prepare($sql);
+
+    //bind
+    $statement->bindValue(':mentor_id', $mentor_id);
+    $statement->bindValue(':mentee_id', $mentee_id);
+
+    //Execute the statement and insert our values.
+    $inserted = $statement->execute();
+    $result_count = $statement->rowCount();
+
+    if($inserted && $result_count != 0) {
+      while ($row = $statement->fetch())
+      {
+          $person = array(
+            'status' => '1',
+            'mentor_id' => $row['mentor_id'],
+            'mentee_id' => $row['mentee_id'],
+            'date_applied' => $row['date_applied'],
+            'date_accepted' => $row['date_accepted'],
+            'relationship' => $row['relationship']
+          );
+          array_push($json, $person);
+      }
+      $jsonstring = json_encode($json);
+    } else {
+      $status = array(
+        'status' => "0" //user cannot be found
+      );
+      array_push($json, $status);
+      $jsonstring = json_encode($json);
+    }
+    echo $jsonstring; //RETURN JSON
+  }
+
+
 } //END CLASS
 
 
@@ -601,6 +646,14 @@ if($_GET['action'] == "getAllMenteesWithStemTag") {
 }
 //http://reframe.local/lib/api.php?action=getAllMenteesWithStemTag&stem_tag=technology
 
+
+/*
+GET RELATIONSHIP BETWEEN TWO MEMBERS
+ */
+if($_GET['action'] == "getRelationship") {
+  $reframe_api->getRelationship($_GET['mentor_id'], $_GET['mentee_id']);
+}
+//http://reframe.local/lib/api.php?action=getAllMenteesWithStemTag&stem_tag=technology
 
 
 /*
