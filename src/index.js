@@ -6,9 +6,11 @@ import { Provider } from 'react-redux';
 import { Router, Route, browserHistory } from 'react-router';
 import App from './App';
 import SignUp from './SignUp';
-import Testing from './Testing';
 import Profile from './Profile';
-
+import OtherProfile from './OtherProfile';
+import Mentors from './Mentors';
+import MyMentors from './MyMentors';
+import Testing from './Testing';
 import rootReducer from './reducers';
 
 import './css/index.css';
@@ -28,8 +30,12 @@ ReactDOM.render(
   <Provider store={store}>
     <Router history={browserHistory}>
       <Route path='/' component={App}>
-        <Route path="/sign_up" component={SignUp}/>
-        <Route path="/profile" component={Profile}/>
+        <Route path="sign_up" component={SignUp}/>
+        <Route path="test" component={Testing}/>
+        <Route path="profile" component={Profile}/>
+        <Route path="profile/:id" component={OtherProfile} />
+        <Route path="mentors" component={Mentors}/>
+        <Route path="my-mentors" component={MyMentors}/>
       </Route>
     </Router>
   </Provider>,

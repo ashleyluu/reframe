@@ -37,7 +37,7 @@ class FBLoginButton extends Component {
     this.getUserFacebookId = this.getUserFacebookId.bind(this);
     this.registration = this.registration.bind(this);
     this.handleFormChanges = this.handleFormChanges.bind(this);
-    this.handleClick = this.handleClick.bind(this);
+    this.handleLoginClick = this.handleLoginClick.bind(this);
   }
   componentDidMount () {
 
@@ -75,17 +75,16 @@ class FBLoginButton extends Component {
   getUserFacebookId(response) {
       var uid = response.authResponse.userID;
 
-      this.props.dispatch(setAuthentication({
-        facebook_id: uid,
-        status: 'connected'
-      }))
-
       return fetch(`http://reframe.modernrockstar.com/lib/api.php?action=getUserInfoByFacebookId&facebook_id=${uid}`)
       .then(response=> response.json())
       .then(json => {
         if( json[0].status === '0') {
           this.registration();
         } else {
+          this.props.dispatch(setAuthentication({
+            facebook_id: uid,
+            status: 'connected'
+          }))
           this.props.dispatch(setProfile(json[0]))
           browserHistory.push("/profile");
         }
@@ -114,8 +113,12 @@ class FBLoginButton extends Component {
     }.bind(this));
   }
 
-  handleClick () {
+  handleLoginClick () {
     window.FB.login(this.checkLoginState, {scope: 'public_profile,email'});
+  }
+
+  handleLogoutClick () {
+  // window.FB.logout(this.checkLoginState, {scope: 'public_profile,email'});
   }
 
   handleFormChanges (e) {
@@ -124,7 +127,7 @@ class FBLoginButton extends Component {
   }
     render () {
       return (
-        <div className="nav-link" onClick={this.handleClick}>
+        <div className="nav-link" onClick={this.handleLoginClick}>
           Login
           <Portal className="modal-container" ref="signUpModal" closeOnEsc>
             <ModalContent values={this.state} handleFormChanges={this.handleFormChanges}/>

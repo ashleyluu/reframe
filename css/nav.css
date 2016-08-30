@@ -28,7 +28,7 @@ nav li a {
 }
 
 nav li a:hover {
-  background-color: #CBF3F0;
+  border-bottom: 2px solid #CBF3F0;
 }
 
 nav .photo {

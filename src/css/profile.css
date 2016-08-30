@@ -1,3 +1,6 @@
+#mentor-basic-info {
+  padding: 20px;
+}
 #mentor-basic-info div {
   margin: 0 10px;
   display: inline-block;
@@ -21,7 +24,6 @@
   font-weight: 100;
   line-height: 52px;
 }
-
 .button {
   margin: 0 5px 20px;
   padding: 10px 30px;
@@ -32,6 +34,18 @@
   font-size: 14px;
   text-decoration: none;
   -webkit-border-radius: 0;
+  cursor: pointer;
+}
+
+.button-invert {
+  background-color: #2EC4B6;
+  color: white;
+}
+.button-yellow {
+  background-color: #FFBF69;
+  border-color: #FFBF69;
+  color: white;
+  cursor: auto;
 }
 
 .headers {
@@ -99,6 +113,11 @@
   background-color: #ffffff;
   font-size: 100px;
   line-height: 150px;
+}
+.stem-true {
+  background-color: #FFBF69;
+  border-color: #d69845;
+  color: white;
 }
 
 .logged-out {
