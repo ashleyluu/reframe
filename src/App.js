@@ -10,7 +10,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        <Navigation history={this.props.history}/>
+        <Navigation {...this.props}/>
         {this.props.children}
       </div>
     );

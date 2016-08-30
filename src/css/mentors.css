@@ -2,7 +2,12 @@
   margin: 20px 0;
   text-align: center;
 }*/
-
+#list h1 {
+  font-size: 48px;
+  font-weight: 100;
+  line-height: 52px;
+  text-align: center;
+}
 .mentor_column {
   width: 22%;
   display: inline-block;
@@ -34,7 +39,7 @@
   width: 50%;
 }
 
-{mentor_
+.mentor {
   margin: 0 0 20px;
   width: 100%;
   border: 1px solid #ededed;
