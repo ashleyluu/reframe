@@ -1,5 +1,11 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { browserHistory } from 'react-router';
 import FBLoginButton from './FBLoginButton';
+
+import './css/navigation.css'
+
+import { Link } from 'react-router';
 
 // class Navigation extends Component {
 //   render() {
@@ -12,21 +18,35 @@ import FBLoginButton from './FBLoginButton';
 
 const Navigation = (props) =>
   <div className='navigation'>
-    <div className="logo">Reframe</div>
-      { props.is_authed ? <LoggedInLinks /> : <LoggedOutLinks /> }
+      { props.auth.facebook_id ? <LoggedInLinks {...props}/> : <LoggedOutLinks {...props} /> }
   </div>
 
-const LoggedInLinks = () =>
+const LoggedInLinks = (props) =>
   <div className="nav-links">
     <div className="link">My Account</div>
-    <div className="link">Log out</div>
+    <div className="nav-link" onClick={() => {
+        localStorage.removeItem("reduxStore");
+        props.dispatch({type: 'CLEAR_AUTH'});
+        browserHistory.push("/")
+      }}
+      >Log out</div>
   </div>
 
-const LoggedOutLinks = () =>
+const LoggedOutLinks = (props) =>
   <div className="nav-links">
-    <FBLoginButton/>
+    <div className='nav-links-left'>
+      <Link className="nav-link" activeClassName="nav-link-active" to="/testing">About</Link>
+      <Link className="nav-link" activeClassName="nav-link-active" to="/contact">Contact</Link>
+    </div>
+    <div className="nav-links-right">
+      <FBLoginButton {...props}/>
+    </div>
   </div>
 
+const mapStateToProps = state => {
+  return {
+    auth: state.auth
+  }
+}
 
-
-export default Navigation;
+export default connect(mapStateToProps)(Navigation);

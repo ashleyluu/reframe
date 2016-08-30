@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Reframe</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/login.css">
+    <link rel="stylesheet" href="../css/nav.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+  </head>
+<body>
+  <nav>
+    <ul>
+      <li><a href="#">About</a></li>
+      <li><a href="#">Contact Us</a></li>
+      <li id="status"><a href="#">Log In</a></li>
+    </ul>
+  </nav>
+    <h1>reframe</h1>
+
+    <!-- The Modal -->
+    <div id="registration" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Create your Reframe profile</h2>
+      </div>
+      <div class="modal-body">
+        <form id="form">
+          <input type="hidden" id="facebook-id">
+          <input type="hidden" id="image-url">
+          <img src="../img/default-user.png" alt="" class="photo" />
+          <div class="modal-text">First Name</div>
+          <input type="text" class="input-text-field" id="fname"><br>
+          <div class="modal-text">Last Name</div>
+          <input type="text" class="input-text-field" id="lname"><br>
+          <div class="modal-text">Email Address</div>
+          <input type="text" class="input-text-field" id="email"><br>
+          <input type="radio" id="mentorButton">mentor
+          <input type="radio" id="menteeButton">mentee
+          <div id="mentorFields">
+            <div class="modal-text">School:</div>
+            <input type="text" class="input-text-field" id="school"><br>
+            <div class="modal-text">Grad Year:</div>
+            <input type="text" class="input-text-field" id="grad-year"><br>
+            <div class="modal-text">Major:</div>
+            <input type="text" class="input-text-field" id="major"><br>
+            <div class="modal-text">Stem Field:</div>
+            <input type="text" class="input-text-field" id="stem-tags"><br>
+            <div class="modal-text">Skills:</div>
+            <input type="text" class="input-text-field" id="skills"><br>
+            Bio: <input type="text" class="input-text-field" id="bio">
+          </div>
+          <div id="menteeFields">
+            <div class="modal-text">Grade:</div>
+            <input type="text" class="input-text-field" id="grade"><br>
+            <div class="modal-text">Interests:</div>
+            <input type="text" class="input-text-field" id="interest"><br>
+            <div class="modal-text">Stem Field:</div>
+            <input type="text" class="input-text-field" id="stem-tags"><br>
+            <div class="modal-text">Bio:</div>
+            <input type="text" class="input-text-field" id="bio">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer clearfix">
+        <span id="submit" class="button">submit</span>
+        <span id="cancel" class="button">cancel</span>
+      </div>
+    </div>
+  </div>
+  <script src="../js/login.js"></script>
+</body>
+</html>
