@@ -9,10 +9,11 @@ ASHLEY
 - Create mentors list page
 
 JOSEPH
-- Debug mentee table [FIXED]
+- Check relationships method [FIXED ISSUE WITH MENTORSHIP APPLICATION]
 - Build static pages: calendar and social features [COMPLETED]
-- Check relationships method
+- Check relationships method [FIXED ISSUE]
 - Create fake accounts
+- Create method to retrieve mentors with optional stem field, ordered by last name ASC (a-z)
 - Copy
 
 KRIS
