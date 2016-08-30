@@ -11,7 +11,7 @@ ASHLEY
 JOSEPH
 - Debug mentee table [FIXED]
 - Build static pages: calendar and social features
-- Check relationships method
+- Check relationships method [FIXED ISSUE WITH MENTORSHIP APPLICATION]
 - Create fake accounts
 - Copy
 
