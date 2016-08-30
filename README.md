@@ -13,6 +13,7 @@ JOSEPH
 - Build static pages: calendar and social features
 - Check relationships method [FIXED ISSUE WITH MENTORSHIP APPLICATION]
 - Create fake accounts
+- Create method to retrieve mentors with optional stem field, ordered by last name ASC (a-z)
 - Copy
 
 KRIS
