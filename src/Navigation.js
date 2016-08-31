@@ -36,6 +36,7 @@ const LoggedInLinks = (props) =>
 
       }
     <div className="nav-links-right">
+      <Link to="/coming-soon" className="nav-link" activeClassName="nav-link-active">Coming Soon</Link>
       <div className="nav-link" onClick={() => {
           localStorage.removeItem("reduxStore");
           props.dispatch({type: 'CLEAR_AUTH'});

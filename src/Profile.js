@@ -29,9 +29,28 @@ const Layout = (profile) =>
     {profile.children && profile.user_type === 'mentor' ? <div>{profile.children}</div> : null }
     {
       profile.user_type === 'mentor' ? <section id="mentor-basic-info">
-        <div className="headers" id="major">Major: {profile.major}</div>
-        <div className="headers" id="college">College: {profile.school}</div>
-        <div className="headers" id="year">Year: {profile.grad_year}</div>
+      <div className="section">
+        <div className="flex">
+          <div className="section-flex">
+            <div className="section-label">Major</div>
+            <div className="section-content">
+              {profile.major}
+            </div>
+          </div>
+          <div className="section-flex">
+            <div className="section-label">College</div>
+            <div className="section-content">
+              {profile.school}
+            </div>
+          </div>
+          <div className="section-flex">
+            <div className="section-label">Year</div>
+            <div className="section-content">
+              {profile.grad_year}
+            </div>
+          </div>
+        </div>
+      </div>
       </section> : <div>
         <section id="mentee-basic-info">
           <div className="headers" id="grade">Grade: {profile.grade}</div>
@@ -43,9 +62,16 @@ const Layout = (profile) =>
       </div>
     }
 
+    <div className="section" style={{marginBottom: '30px'}}>
+      <div className="section-label">Bio</div>
+      <div className="section-content">
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        {profile.bio}
+      </div>
+    </div>
     {/*
             <section id="mentor-additional-info">
-              <div className="headers" id="bio">Bio</div>
+
               <div className="headers" id="achievements">Achievements</div>
               <div className="headers" id="skills">Skills</div>
             </section> */}
@@ -53,10 +79,30 @@ const Layout = (profile) =>
 
     <section className="stem gray-background">
       <div className="section-headers">Stem Field</div>
-      <i className={`fa fa-flask stem-icons stem-${profile.stem_tags === 'science' ?  true : false}`} aria-hidden="true"></i>
-      <i className={`fa fa-calculator stem-icons stem-${profile.stem_tags === 'mathematics' ?  true : false}`} aria-hidden="true"></i>
-      <i className={`fa fa-cog stem-icons stem-${profile.stem_tags === 'engineering' ?  true : false }`} aria-hidden="true"></i>
-      <i className={`fa fa-laptop stem-icons stem-${profile.stem_tags === 'technology' ?  true : false }`} aria-hidden="true"></i>
+      <div className={`stem-icons stem-${profile.stem_tags === 'science' ?  true : false}`}>
+        <div className="stem-icon-wrapper">
+          <i className="fa fa-flask" aria-hidden="true"></i>
+          <span className="stem-icon-label">Science</span>
+        </div>
+      </div>
+      <div className={`stem-icons stem-${profile.stem_tags === 'mathematic' ?  true : false}`}>
+        <div className="stem-icon-wrapper">
+          <i className="fa fa-calculator" aria-hidden="true"></i>
+          <span className="stem-icon-label">Mathematics</span>
+        </div>
+      </div>
+      <div className={`stem-icons stem-${profile.stem_tags === 'engineering' ?  true : false}`}>
+        <div className="stem-icon-wrapper">
+          <i className="fa fa-cog" aria-hidden="true"></i>
+          <span className="stem-icon-label">Engineering</span>
+        </div>
+      </div>
+      <div className={`stem-icons stem-${profile.stem_tags === 'technology' ?  true : false}`}>
+        <div className="stem-icon-wrapper">
+          <i className="fa fa-laptop" aria-hidden="true"></i>
+          <span className="stem-icon-label">Technology</span>
+        </div>
+      </div>
     </section>
 
     <section className="network">

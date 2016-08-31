@@ -5,22 +5,27 @@ import { connect } from 'react-redux';
 
 import './css/mentors.css'
 
-class Mentors extends Component {
+class Applicants extends Component {
   constructor (props) {
     super(props);
     this.state = {mentors: []}
+    this.handleAccept = this.handleAccept.bind(this);
   }
 
   componentDidMount () {
-    fetch('http://reframe.modernrockstar.com/lib/api.php?action=getAllMentorsWithStemTag')
+    fetch(`http://reframe.modernrockstar.com/lib/api.php?action=getAllMenteesForMentor&mentor_id=${this.props.profile.user_id}&relationship=applied`)
     .then(response => response.json())
     .then(function(json){this.setState({mentors: json})}.bind(this))
   }
-
+  handleAccept (menteeId) {
+    // fetch(`http://reframe.modernrockstar.com/lib/api.php?action=acceptMentee&mentee_id=${menteeId}&mentor_id=${this.props.profile.user_id}`)
+    console.log(menteeId)
+    console.log(`http://reframe.modernrockstar.com/lib/api.php?action=acceptMentee&mentee_id=${menteeId}&mentor_id=${this.props.profile.user_id}`)
+  }
   render () {
     return (
       <div id='list'>
-        <h1>Mentors List</h1>
+        <h1>Applicants List</h1>
         {this.state.mentors.map((mentor, id) =>
           <div className="mentor-flex" key={id}>
             <div className="mentor-flex-child">
@@ -31,7 +36,8 @@ class Mentors extends Component {
               </div>
             </div>
             <div className="mentor-flex-child-right mentor_action">
-              <Link to={`profile/${mentor.facebook_id}`} ><span className="mentor_button">profile</span></Link>
+              <div onClick={()=> this.handleAccept(mentor)}><span className="mentor_button">Accept</span></div>
+              <div><span className="mentor_button">Defer</span></div>
             </div>
           </div>
         )}
@@ -46,4 +52,4 @@ const mapStateToProps = (state, props) => {
   }
 }
 
-export default connect(mapStateToProps)(Mentors);
+export default connect(mapStateToProps)(Applicants);
