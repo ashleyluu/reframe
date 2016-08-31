@@ -579,6 +579,7 @@ class ReframeApi {
       {
           $person = array(
             'status' => '1',
+            'user_id' => $row['user_id'],
             'mentor_id' => $row['mentor_id'],
             'mentee_id' => $row['mentee_id'],
             'facebook_id' => $row['facebook_id'],
@@ -660,6 +661,7 @@ class ReframeApi {
       {
           $person = array(
             'status' => '1',
+            'user_id' => $row['user_id'],
             'mentor_id' => $row['mentor_id'],
             'mentee_id' => $row['mentee_id'],
             'facebook_id' => $row['facebook_id'],
