@@ -10,7 +10,8 @@ import Profile from './Profile';
 import OtherProfile from './OtherProfile';
 import Mentors from './Mentors';
 import MyMentors from './MyMentors';
-import Testing from './Testing';
+import Applicants from './Applicants';
+import ComingSoon from './ComingSoon';
 import rootReducer from './reducers';
 
 import './css/index.css';
@@ -31,11 +32,12 @@ ReactDOM.render(
     <Router history={browserHistory}>
       <Route path='/' component={App}>
         <Route path="sign_up" component={SignUp}/>
-        <Route path="test" component={Testing}/>
-        <Route path="profile" component={Profile}/>
+        <Route path="/profile" component={Profile}/>
         <Route path="profile/:id" component={OtherProfile} />
         <Route path="mentors" component={Mentors}/>
         <Route path="my-mentors" component={MyMentors}/>
+        <Route path="applicants" component={Applicants}/>
+        <Route path="coming-soon" component={ComingSoon}/>
       </Route>
     </Router>
   </Provider>,

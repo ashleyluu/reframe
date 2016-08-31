@@ -22,17 +22,15 @@ class Mentors extends Component {
       <div id='list'>
         <h1>Mentors List</h1>
         {this.state.mentors.map((mentor, id) =>
-          <div className="mentor" key={id}>
-            <div className="mentor_column">
+          <div className="mentor-flex" key={id}>
+            <div className="mentor-flex-child">
               <img src={mentor.image_url} className="mentor_photo" alt="user"/>
+              <div>
+                <div className="mentor_text">{mentor.first_name} {mentor.last_name}</div>
+                <div className="text">{mentor.stem_tags}</div>
+              </div>
             </div>
-            <div className="mentor_column">
-              <div className="mentor_text">{mentor.first_name} {mentor.last_name}</div>
-            </div>
-            <div className="mentor_column">
-              <div className="text">{mentor.stem_tags}</div>
-            </div>
-            <div className="mentor_column mentor_action">
+            <div className="mentor-flex-child-right mentor_action">
               <Link to={`profile/${mentor.facebook_id}`} ><span className="mentor_button">profile</span></Link>
             </div>
           </div>
