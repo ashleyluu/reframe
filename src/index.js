@@ -32,7 +32,7 @@ ReactDOM.render(
     <Router history={browserHistory}>
       <Route path='/' component={App}>
         <Route path="sign_up" component={SignUp}/>
-        <Route path="profile" component={Profile}/>
+        <Route path="/profile" component={Profile}/>
         <Route path="profile/:id" component={OtherProfile} />
         <Route path="mentors" component={Mentors}/>
         <Route path="my-mentors" component={MyMentors}/>

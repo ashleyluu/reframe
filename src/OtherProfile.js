@@ -10,12 +10,14 @@ class OtherProfile extends Component {
     this.state = {
       relationship: {
         status: '0'
-      }
+      },
+      people: [{status:0}]
     }
     this.handleApply = this.handleApply.bind(this);
   }
 
   componentDidMount () {
+
     fetch(`http://reframe.modernrockstar.com/lib/api.php?action=getUserInfoByFacebookId&facebook_id=${this.props.params.id}`)
     .then( response => response.json() )
     .then( function (json){ this.setState({
@@ -23,7 +25,14 @@ class OtherProfile extends Component {
     })
       return json[0];
     }.bind(this))
-
+    .then(function (user) {
+      fetch(`http://reframe.modernrockstar.com/lib/api.php?action=getAll${user.user_type ==='mentee' ? 'Mentors' : 'Mentees'}For${user.user_type ==='mentee' ? 'Mentee' : 'Mentor'}&${user.user_type ==='mentee' ? 'mentee_id' : 'mentor_id'}=${user.user_id}`)
+      .then(response => response.json())
+      .then(function(json){
+        this.setState({people: json});
+      }.bind(this));
+      return user
+    }.bind(this))
     .then(function(json) {
       if(json.user_type ==='mentor') {
         fetch(`http://reframe.modernrockstar.com/lib/api.php?action=getRelationship&mentor_id=${json.user_id}&mentee_id=${this.props.profile.user_id}`).then(response => response.json()).then(json=> this.setState({relationship: json[0]}))
@@ -53,8 +62,8 @@ class OtherProfile extends Component {
       button = (<div className="button" onClick={this.handleApply}>Apply</div>);
     }
     return (
-      <Layout {...this.state.profile}>
-        {button}
+      <Layout people={this.state.people } auth={this.props.auth} {...this.state.profile}>
+        {this.props.profile.user_type === 'mentee' ? {button} : null}
         <div className="button">follow</div>
       </Layout>
     )
@@ -63,6 +72,7 @@ class OtherProfile extends Component {
 
 const mapStateToProps = (state, props) => {
   return {
+    auth: state.auth,
     profile: state.profile
   }
 }
