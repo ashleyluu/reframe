@@ -26,7 +26,7 @@ class OtherProfile extends Component {
       return json[0];
     }.bind(this))
     .then(function (user) {
-      fetch(`http://reframe.modernrockstar.com/lib/api.php?action=getAll${user.user_type ==='mentee' ? 'Mentors' : 'Mentees'}For${user.user_type ==='mentee' ? 'Mentee' : 'Mentor'}&${user.user_type ==='mentee' ? 'mentee_id' : 'mentor_id'}=${user.user_id}`)
+      fetch(`http://reframe.modernrockstar.com/lib/api.php?action=getAll${user.user_type ==='mentee' ? 'Mentors' : 'Mentees'}For${user.user_type ==='mentee' ? 'Mentee' : 'Mentor'}&${user.user_type ==='mentee' ? 'mentee_id' : 'mentor_id'}=${user.user_id}&relationship=accepted`)
       .then(response => response.json())
       .then(function(json){
         this.setState({people: json});
@@ -63,7 +63,7 @@ class OtherProfile extends Component {
     }
     return (
       <Layout people={this.state.people } auth={this.props.auth} {...this.state.profile}>
-        {this.props.profile.user_type === 'mentee' ? {button} : null}
+        {button}
         <div className="button">follow</div>
       </Layout>
     )

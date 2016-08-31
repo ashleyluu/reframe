@@ -24,7 +24,7 @@ class Profile extends Component {
       return json[0]
     }.bind(this))
     .then(function (user) {
-      fetch(`http://reframe.modernrockstar.com/lib/api.php?action=getAll${user.user_type ==='mentee' ? 'Mentors' : 'Mentees'}For${user.user_type ==='mentee' ? 'Mentee' : 'Mentor'}&${user.user_type ==='mentee' ? 'mentee_id' : 'mentor_id'}=${user.user_id}`)
+      fetch(`http://reframe.modernrockstar.com/lib/api.php?action=getAll${user.user_type ==='mentee' ? 'Mentors' : 'Mentees'}For${user.user_type ==='mentee' ? 'Mentee' : 'Mentor'}&${user.user_type ==='mentee' ? 'mentee_id' : 'mentor_id'}=${user.user_id}&relationship=accepted`)
       .then(response => response.json())
       .then(function(json){
         this.setState({people: json});
