@@ -513,6 +513,164 @@ class ReframeApi {
   }
 
 
+  function getAllMentorsForMentee($user_id, $relationship = null) {
+    $json = array(); //INIT JSON ARRAY
+
+    if($relationship == "applied") {
+      $relationship_filter = " AND x.relationship = 'applied'";
+    }elseif($relationship == "accepted") {
+      $relationship_filter = " AND x.relationship = 'accepted'";
+    }
+
+    $sql = "SELECT
+            x.mentor_id,
+            x.mentee_id,
+            x.date_applied,
+            x.date_accepted,
+            x.relationship,
+            y.school,
+            y.grad_year,
+            y.major,
+            y.skills,
+            z.user_id,
+            z.facebook_id,
+            z.first_name,
+            z.last_name,
+            z.image_url,
+            z.email,
+            z.user_type,
+            z.stem_tags,
+            z.bio
+            FROM mentoring_pair x
+            LEFT OUTER JOIN mentor y ON  x.mentor_id = y.mentor_id
+            LEFT OUTER JOIN person z ON  z.user_id = y.user_id
+            WHERE x.mentee_id = :mentee_id".$relationship_filter;
+
+    //Prepare our statement.
+    $statement = $this->pdo->prepare($sql);
+
+    //bind
+    $statement->bindValue(':mentee_id', $user_id);
+    //var_dump($statement);
+
+    //Execute the statement and insert our values.
+    $inserted = $statement->execute();
+    $result_count = $statement->rowCount();
+
+    if($inserted && $result_count != 0) {
+      while ($row = $statement->fetch())
+      {
+          $person = array(
+            'status' => '1',
+            'mentor_id' => $row['mentor_id'],
+            'mentee_id' => $row['mentee_id'],
+            'facebook_id' => $row['facebook_id'],
+            'first_name' => $row['first_name'],
+            'last_name' => $row['last_name'],
+            'image_url' => $row['image_url'],
+            'email' => $row['email'],
+            'user_type' => $row['user_type'],
+            'stem_tags' => $row['stem_tags'],
+            'bio' => $row['bio'],
+            'school' => $row['school'],
+            'grad_year' => $row['grad_year'],
+            'major' => $row['major'],
+            'skills' => $row['skills'],
+            'date_applied' => $row['date_applied'],
+            'date_accepted' => $row['date_accepted'],
+            'relationship' => $row['relationship']
+          );
+          array_push($json, $person);
+      }
+      $jsonstring = json_encode($json);
+    } else {
+      $status = array(
+        'status' => "0" //user cannot be found
+      );
+      array_push($json, $status);
+      $jsonstring = json_encode($json);
+    }
+    echo $jsonstring; //RETURN JSON
+  }
+
+
+  function getAllMenteesForMentor($user_id, $relationship = null) {
+    $json = array(); //INIT JSON ARRAY
+
+    if($relationship == "applied") {
+      $relationship_filter = " AND x.relationship = 'applied'";
+    }elseif($relationship == "accepted") {
+      $relationship_filter = " AND x.relationship = 'accepted'";
+    }
+
+    $sql = "SELECT
+            x.mentor_id,
+            x.mentee_id,
+            x.date_applied,
+            x.date_accepted,
+            x.relationship,
+            y.grade,
+            y.interest,
+            z.user_id,
+            z.facebook_id,
+            z.first_name,
+            z.last_name,
+            z.image_url,
+            z.email,
+            z.user_type,
+            z.stem_tags,
+            z.bio
+            FROM mentoring_pair x
+            LEFT OUTER JOIN mentee y ON  x.mentee_id = y.mentee_id
+            LEFT OUTER JOIN person z ON  z.user_id = y.user_id
+            WHERE x.mentor_id = :mentor_id".$relationship_filter;
+
+    //Prepare our statement.
+    $statement = $this->pdo->prepare($sql);
+
+    //bind
+    $statement->bindValue(':mentor_id', $user_id);
+    //var_dump($statement);
+
+    //Execute the statement and insert our values.
+    $inserted = $statement->execute();
+    $result_count = $statement->rowCount();
+
+    if($inserted && $result_count != 0) {
+      while ($row = $statement->fetch())
+      {
+          $person = array(
+            'status' => '1',
+            'mentor_id' => $row['mentor_id'],
+            'mentee_id' => $row['mentee_id'],
+            'facebook_id' => $row['facebook_id'],
+            'first_name' => $row['first_name'],
+            'last_name' => $row['last_name'],
+            'image_url' => $row['image_url'],
+            'email' => $row['email'],
+            'user_type' => $row['user_type'],
+            'stem_tags' => $row['stem_tags'],
+            'bio' => $row['bio'],
+            'grade' => $row['grade'],
+            'interest' => $row['interest'],
+            'date_applied' => $row['date_applied'],
+            'date_accepted' => $row['date_accepted'],
+            'relationship' => $row['relationship']
+          );
+          array_push($json, $person);
+      }
+      $jsonstring = json_encode($json);
+    } else {
+      $status = array(
+        'status' => "0" //user cannot be found
+      );
+      array_push($json, $status);
+      $jsonstring = json_encode($json);
+    }
+    echo $jsonstring; //RETURN JSON
+  }
+
+
 } //END CLASS
 
 
@@ -654,6 +812,31 @@ if($_GET['action'] == "getRelationship") {
   $reframe_api->getRelationship($_GET['mentor_id'], $_GET['mentee_id']);
 }
 //http://reframe.local/lib/api.php?action=getAllMenteesWithStemTag&stem_tag=technology
+
+
+/*
+GET ALL MENTORS FOR A MENTEE
+ */
+if($_GET['action'] == "getAllMentorsForMentee") {
+  $reframe_api->getAllMentorsForMentee($_GET['mentee_id'], $_GET['relationship']);
+}
+//http://reframe.local/lib/api.php?action=getAllMentorsForMentee&mentee_id=1&relationship=applied
+
+
+/*
+GET ALL MENTEES FOR A MENTOR
+ */
+if($_GET['action'] == "getAllMenteesForMentor") {
+  $reframe_api->getAllMenteesForMentor($_GET['mentor_id'], $_GET['relationship']);
+}
+http://reframe.local/lib/api.php?action=getAllMenteesForMentor&mentor_id=2&relationship=accepted
+
+
+
+
+
+
+
 
 
 /*
