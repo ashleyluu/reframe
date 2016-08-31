@@ -108,6 +108,9 @@ class ReframeApi {
 
 
   function applyForMentorship($mentee_id, $mentor_id) {
+    $mentee_id = $this->convertUserIdToMenteeId($mentee_id);
+    $mentor_id = $this->convertUserIdToMentorId($mentor_id);
+
     $sql = "INSERT INTO mentoring_pair (relationship_id, mentor_id, mentee_id, date_applied, relationship)
             VALUES (null, :mentor_id, :mentee_id, CURDATE(), 'applied')";
 
@@ -668,6 +671,63 @@ class ReframeApi {
       $jsonstring = json_encode($json);
     }
     echo $jsonstring; //RETURN JSON
+  }
+
+
+  function convertUserIdToMentorId($user_id) {
+    $sql = "SELECT mentor_id
+            FROM mentor
+            WHERE user_id = :user_id
+            LIMIT 1
+           ";
+
+    //Prepare our statement.
+    $statement = $this->pdo->prepare($sql);
+
+    //bind
+    $statement->bindValue(':user_id', $user_id);
+
+    //Execute the statement and insert our values.
+    $inserted = $statement->execute();
+    $result_count = $statement->rowCount();
+
+    if($inserted && $result_count == 1) {
+      while ($row = $statement->fetch())
+      {
+        $mentor_id = $row['mentor_id'];
+      }
+      return $mentor_id;
+    } else {
+      return false;
+    }
+  }
+
+  function convertUserIdToMenteeId($user_id) {
+    $sql = "SELECT mentee_id
+            FROM mentee
+            WHERE user_id = :user_id
+            LIMIT 1
+           ";
+
+    //Prepare our statement.
+    $statement = $this->pdo->prepare($sql);
+
+    //bind
+    $statement->bindValue(':user_id', $user_id);
+
+    //Execute the statement and insert our values.
+    $inserted = $statement->execute();
+    $result_count = $statement->rowCount();
+
+    if($inserted && $result_count == 1) {
+      while ($row = $statement->fetch())
+      {
+        $mentee_id = $row['mentee_id'];
+      }
+      return $mentee_id;
+    } else {
+      return false;
+    }
   }
 
 
