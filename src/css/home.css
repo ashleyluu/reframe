@@ -1,0 +1,25 @@
+.home-wrapper {
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 100%;
+  justify-content: center;
+  align-items: stretch;
+  position: absolute;
+  top: 45px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.home-header {
+  margin: -100px 0 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 100px;
+  font-weight: 100;
+  letter-spacing: 3px;
+  text-align: center;
+  color: #2EC4B6;
+}
