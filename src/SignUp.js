@@ -42,15 +42,36 @@ const MentorForm = props =>
     <SignUpButtons {...props}/>
   </div>
 
-const StemFieldSelect = props =>
-  <select type="text" value="" className="input-text-field" name="stem_tags">
-    <option value="" disabled>Select your option</option>
-    <option value="sciene">Science</option>
-    <option value="technology">Technology</option>
-    <option value="engineering">Engineering</option>
-    <option value="mathematics">Mathmatics</option>
-  </select>
+class StemFieldSelect extends React.Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      selected: ''
+    }
 
+    this.handleSelect = this.handleSelect.bind(this);
+  }
+  handleSelect (e) {
+    this.setState({ selected: e.target.value})
+  }
+  render() {
+    return (
+      <select type="text"
+              value={this.state.selected}
+              onChange={this.handleSelect}
+              className="input-text-field"
+              name="stem_tags"
+      >
+        <option value="" disabled>Select your option</option>
+        <option value="sciene">Science</option>
+        <option value="technology">Technology</option>
+        <option value="engineering">Engineering</option>
+        <option value="mathematics">Mathmatics</option>
+      </select>
+    )
+  }
+
+}
 const SignUpButtons = props =>
   <div className="signup-buttons">
       <span onClick={props.closePortal} className="signup-button">cancel</span>
