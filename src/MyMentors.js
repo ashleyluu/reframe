@@ -17,24 +17,33 @@ class MyMentors extends Component {
 
   componentDidMount () {
     console.log(this.props)
-    fetch('http://reframe.modernrockstar.com/lib/api.php?action=getAllMentorsWithStemTag')
-    .then(response => response.json())
-    .then( allMentors => {
+    fetch(`http://reframe.modernrockstar.com/lib/api.php?action=getAllMentorsForMentee&mentee_id=${this.props.profile.user_id}&relationship=accepted`).then(response => response.json())
+    .then(function(mentors){
+      this.setState(
+        { mentors: mentors}
+      )
+    }.bind(this));
 
-      fetch(`http://reframe.modernrockstar.com/lib/api.php?action=getAllRelationshipsForUser&user_id=${this.props.profile.user_id}&user_type=mentee`).then(response => response.json())
-          .then(relationships => {
-            const mentors = relationships.map(function(relationship){
-              return allMentors.filter(function(mentor){
-                return (mentor.user_id === relationship.mentor_id)
-              })
-            })
-            this.setState(
-              { mentors: mentors[0]}
-            )
 
-      })
 
-    })
+    // fetch('http://reframe.modernrockstar.com/lib/api.php?action=getAllMentorsWithStemTag')
+    // .then(response => response.json())
+    // .then( allMentors => {
+    //
+    //   fetch(`http://reframe.modernrockstar.com/lib/api.php?action=getAllRelationshipsForUser&user_id=${this.props.profile.user_id}&user_type=mentee`).then(response => response.json())
+    //       .then(relationships => {
+    //         const mentors = relationships.map(function(relationship){
+    //           return allMentors.filter(function(mentor){
+    //             return (mentor.user_id === relationship.mentor_id)
+    //           })
+    //         })
+    //         this.setState(
+    //           { mentors: mentors[0]}
+    //         )
+    //
+    //   })
+    //
+    // })
   }
 
   render () {

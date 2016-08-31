@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { browserHistory } from 'react-router';
+import { browserHistory, IndexLink } from 'react-router';
 import FBLoginButton from './FBLoginButton';
 
 import './css/navigation.css'
@@ -51,7 +51,8 @@ const LoggedInLinks = (props) =>
 const LoggedOutLinks = (props) =>
   <div className="nav-links">
     <div className='nav-links-left'>
-      <Link className="nav-link" activeClassName="nav-link-active" to="/testing">About</Link>
+      <IndexLink className="nav-link" activeClassName="nav-link-active" to="/">Home</IndexLink>
+      <Link className="nav-link" activeClassName="nav-link-active" to="/about">About</Link>
       <Link className="nav-link" activeClassName="nav-link-active" to="/contact">Contact</Link>
     </div>
     <div className="nav-links-right">
