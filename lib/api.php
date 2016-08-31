@@ -151,6 +151,9 @@ class ReframeApi {
 
 
   function acceptMentee($mentor_id, $mentee_id) {
+    $mentee_id = $this->convertUserIdToMenteeId($mentee_id);
+    $mentor_id = $this->convertUserIdToMentorId($mentor_id);
+
     $sql = "UPDATE mentoring_pair
             SET date_accepted = CURDATE(),
                 relationship = 'accepted'
@@ -255,9 +258,11 @@ class ReframeApi {
     $json = array(); //INIT JSON ARRAY
 
     if($user_type == "mentor") {
+      $mentor_id = $this->convertUserIdToMentorId($user_id);
       $sql_filter = "mentor_id = :mentor_id";
     } else {
-      $sql_filter = "mentee_id = ".$user_id;
+      $mentee_id = $this->convertUserIdToMenteeId($user_id);
+      $sql_filter = "mentee_id = :mentee_id";
     }
 
     $sql = "SELECT mentor_id, mentee_id, date_applied, date_accepted, relationship
@@ -268,7 +273,11 @@ class ReframeApi {
     $statement = $this->pdo->prepare($sql);
 
     //bind
-    $statement->bindValue(':mentor_id', $user_id);
+    if($user_type == "mentor") {
+      $statement->bindValue(':mentor_id', $mentor_id);
+    } else {
+      $statement->bindValue(':mentee_id', $mentee_id);
+    }
     //var_dump($statement);
 
     //Execute the statement and insert our values.
@@ -474,6 +483,9 @@ class ReframeApi {
   function getRelationship($mentor_id, $mentee_id) {
     $json = array(); //INIT JSON ARRAY
 
+    $mentee_id = $this->convertUserIdToMenteeId($mentee_id);
+    $mentor_id = $this->convertUserIdToMentorId($mentor_id);
+
     $sql = "SELECT mentor_id, mentee_id, date_applied, date_accepted, relationship
             FROM mentoring_pair
             WHERE mentor_id = :mentor_id AND mentee_id = :mentee_id
@@ -496,8 +508,8 @@ class ReframeApi {
       {
           $person = array(
             'status' => '1',
-            'mentor_id' => $row['mentor_id'],
-            'mentee_id' => $row['mentee_id'],
+            // 'mentor_id' => $row['mentor_id'],
+            // 'mentee_id' => $row['mentee_id'],
             'date_applied' => $row['date_applied'],
             'date_accepted' => $row['date_accepted'],
             'relationship' => $row['relationship']
@@ -518,6 +530,8 @@ class ReframeApi {
 
   function getAllMentorsForMentee($user_id, $relationship = null) {
     $json = array(); //INIT JSON ARRAY
+
+    $mentee_id = $this->convertUserIdToMenteeId($user_id);
 
     if($relationship == "applied") {
       $relationship_filter = " AND x.relationship = 'applied'";
@@ -553,7 +567,7 @@ class ReframeApi {
     $statement = $this->pdo->prepare($sql);
 
     //bind
-    $statement->bindValue(':mentee_id', $user_id);
+    $statement->bindValue(':mentee_id', $mentee_id);
     //var_dump($statement);
 
     //Execute the statement and insert our values.
@@ -600,6 +614,8 @@ class ReframeApi {
   function getAllMenteesForMentor($user_id, $relationship = null) {
     $json = array(); //INIT JSON ARRAY
 
+    $mentor_id = $this->convertUserIdToMentorId($user_id);
+
     if($relationship == "applied") {
       $relationship_filter = " AND x.relationship = 'applied'";
     }elseif($relationship == "accepted") {
@@ -632,7 +648,7 @@ class ReframeApi {
     $statement = $this->pdo->prepare($sql);
 
     //bind
-    $statement->bindValue(':mentor_id', $user_id);
+    $statement->bindValue(':mentor_id', $mentor_id);
     //var_dump($statement);
 
     //Execute the statement and insert our values.
@@ -835,7 +851,7 @@ GET ALL RELATIONSHIPS FOR A USER
 if($_GET['action'] == "getAllRelationshipsForUser") {
   $reframe_api->getAllRelationshipsForUser($_GET['user_id'], $_GET['user_type']);
 }
-//http://reframe.local/lib/api.php?action=getAllRelationshipsForUser&mentee_id=2&user_type=(mentor/mentee)
+//http://reframe.local/lib/api.php?action=getAllRelationshipsForUser&user_id=2&user_type=(mentor/mentee)
 
 
 /*
@@ -871,7 +887,7 @@ GET RELATIONSHIP BETWEEN TWO MEMBERS
 if($_GET['action'] == "getRelationship") {
   $reframe_api->getRelationship($_GET['mentor_id'], $_GET['mentee_id']);
 }
-//http://reframe.local/lib/api.php?action=getAllMenteesWithStemTag&stem_tag=technology
+//http://reframe.local/lib/api.php?action=getRelationship&mentor_id=&mentee_id=
 
 
 /*
